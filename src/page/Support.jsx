@@ -8,7 +8,7 @@ import Chat from "../components/Chat/Chat";
 const Support = () => {
   return (
     <>
-    <div className="h-[90vh] overflow-hidden">
+    <div className=" overflow-hidden">
       <PackageBreadcrumb>
         <Breadcrumbs aria-label="breadcrumb">
           <Link underline="hover" color="grey" href="/support">
@@ -19,7 +19,7 @@ const Support = () => {
           </Link>
         </Breadcrumbs>
       </PackageBreadcrumb>
-      <div className="flex ">
+      <div className="flex h-[85vh]">
         <ChatList />
         <Chat />
 

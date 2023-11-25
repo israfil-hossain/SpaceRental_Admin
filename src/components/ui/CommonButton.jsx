@@ -6,10 +6,10 @@ function CommonButton(props) {
 
   return (
     <button
-      className={`${className} rounded-lg hover:bg-[#ffffff] text-gray-800 lg:font-bold xs:font-normal py-2 lg:px-4 xs:px-2 inline-flex items-center space-x-2`}
+      className={`${className} rounded-lg hover:bg-[#ffffff]  text-gray-800 lg:font-bold xs:font-normal py-2 lg:px-4 xs:px-2 inline-flex items-center space-x-2`}
     >
       {icon ? icon : ""}
-      <span className="lg:text-sm xs:text-xs">{text}</span>
+      <span className="lg:text-sm xs:text-xs ">{text}</span>
     </button>
   );
 }

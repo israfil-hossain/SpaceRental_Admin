@@ -16,11 +16,39 @@ const Chat = () => {
           </p>
         </div>
       </div>
-      <div className="flex-1 overflow-y-auto px-4">
-        {" "}
-        {/* flex-1 allows this section to take up remaining vertical space */}
-        {/* Your chat messages go here */}
-        <div>Hello</div>
+      
+      <div className="flex-1 overflow-y-auto px-4 scrollbar-thin scrollbar-thumb-primary scrollbar-track-gray-200">
+        <div className="px-4 py-8">
+          <div className="flex gap-3">
+            <div className="w-12 h-12 rounded-full bg-rose-400 p-0.5">
+              <img
+                src="https://pbs.twimg.com/profile_images/1397151839850729475/1FvqSN6H_400x400.jpg"
+                alt="user"
+                className="h-full w-full object-cover rounded-full"
+              />
+            </div>
+
+            <div className="text-sm p-5 w-[75%] bg-slate-600 text-slate-100 rounded-lg relative before:absolute before:content-[''] before:w-3 before:h-3 before:bg-slate-600 before:rotate-45 before: before:-left-1 before:top-4">
+              <p>Hi There!</p>
+              <p>
+                Looking to get Started? I can help answer to your personal
+                questions!
+              </p>
+            </div>
+          </div>
+        </div>
+
+        <div className="px-4 py-8">
+          <div className="flex items-center justify-end gap-3">
+          <div className="text-sm p-5 w-[75%] bg-slate-600 text-slate-100 rounded-lg relative ">
+            <p>Hi There!</p>
+            <p>
+              Looking to get Started? I can help answer your personal
+              questions!
+            </p>
+          </div>
+          </div>
+        </div>
       </div>
 
       <div className="flex space-x-3 px-5">

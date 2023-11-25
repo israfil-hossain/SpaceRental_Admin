@@ -19,43 +19,9 @@ import { getCurrentMonth } from "../utils/CommonFunction";
 
 const Stores = () => {
   const currentMonth = getCurrentMonth(); 
-  const [data, setData] = useState([]);
-  const [userType, setUserType] = useState("");
-  const id = localStorage.getItem("userid");
-  const [isLoading, setIsLoading] = useState(true);
   const [selectedOption, setSelectedOption] = useState(currentMonth);
 
  
-
-  // Fetch User Data
-  useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const res = await QuizService.getQuiz();
-        const suffleData = ShuffleArray(res.data);
-        setData(suffleData);
-        setIsLoading(false); // After fetching data, set isLoading to false
-      } catch (error) {
-        // Handle any error that might occur during data fetching
-        console.error("Error fetching data:", error);
-        setIsLoading(false); // Set isLoading to false even if there's an error
-      }
-    };
-
-    const getUserData = async () => {
-      try {
-        const res = await UserService.getSingleUser(id);
-        setUserType(res?.data?.usertype);
-      } catch (error) {
-        // Handle any error that might occur while fetching user data
-        console.error("Error fetching user data:", error);
-      }
-    };
-
-    getUserData(id);
-    fetchData();
-  }, [id]);
-
   return (
     <Fragment>
       <div>
@@ -95,28 +61,6 @@ const Stores = () => {
           <StoreCard />
           <StoreCard />
         </div>
-
-        {/* {isLoading ? (
-          <div>
-            <CommonProgress />
-          </div>
-        ) : (
-          <div className="grid lg:grid-cols-5 gap-5 md:grid-cols-2 sm:grid-cols-2 xs:grid-cols-2 mt-5">
-            {data.map((quiz, i) => (
-              <Card
-                key={i}
-                title={quiz?.quiz_name}
-                number={""}
-                image={quiz?.image}
-                title2={"Question"}
-                link={`/questions?id=${quiz?.quiz_name}`}
-                disabled={
-                  quiz?.accessibility === "paid" && userType === "unpaid"
-                }
-              />
-            ))}
-          </div>
-        )} */}
       </div>
     </Fragment>
   );

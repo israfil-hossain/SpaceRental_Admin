@@ -6,6 +6,7 @@ import { useTheme } from "@mui/material/styles";
 
 // third-party
 import ReactApexChart from "react-apexcharts";
+import { months } from "../../constants/Data/constantsData";
 
 // chart options
 const areaChartOptions = {
@@ -45,20 +46,7 @@ const IncomeAreaChart = ({ slot,height }) => {
       xaxis: {
         categories:
           slot === "month"
-            ? [
-                "Jan",
-                "Feb",
-                "Mar",
-                "Apr",
-                "May",
-                "Jun",
-                "Jul",
-                "Aug",
-                "Sep",
-                "Oct",
-                "Nov",
-                "Dec",
-              ]
+            ? months?.value
             : ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"],
         labels: {
           style: {
