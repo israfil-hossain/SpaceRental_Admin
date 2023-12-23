@@ -1,5 +1,9 @@
 import React, { lazy } from "react";
-import { createBrowserRouter, RouterProvider } from "react-router-dom";
+import {
+  createBrowserRouter,
+  Navigate,
+  RouterProvider,
+} from "react-router-dom";
 import AppOutlet from "./outlets/AppOutlet";
 import AuthorizedOutlet from "./outlets/AuthorizedOutlet";
 import UnauthorizedOutlet from "./outlets/UnauthorizedOutlet";
@@ -38,6 +42,10 @@ const App = () => {
               path: "",
               element: <Signin />,
             },
+            {
+              path: "*",
+              element: <Navigate to={"/login"} />,
+            },
           ],
         },
 
@@ -49,6 +57,34 @@ const App = () => {
             {
               path: "",
               element: <Dashboard />,
+            },
+            {
+              path: "stores",
+              element: <Stores />,
+            },
+            {
+              path: "users",
+              element: <Users />,
+            },
+            {
+              path: "profile",
+              element: <Profile />,
+            },
+            {
+              path: "earnings",
+              element: <Earnings />,
+            },
+            {
+              path: "control-panel",
+              element: <ControlPanel />,
+            },
+            {
+              path: "support",
+              element: <Support />,
+            },
+            {
+              path: "*",
+              element: <Navigate to={"/"} />,
             },
           ],
         },
