@@ -49,12 +49,12 @@ adminAPI.interceptors.response.use(undefined, (error) => {
     if (!isRefreshingToken) {
       isRefreshingToken = true;
       axios
-        .post(`${ADMIN_BASE_URL}/api/Login/refresh-token`, {
+        .post(`${ADMIN_BASE_URL}/api/Auth/TokenRefresh`, {
           refreshToken,
         })
         .then(({ data = {} }) => {
-          setAccessToken(data?.data?.jwtToken);
-          processRequestQueue(data?.data?.jwtToken);
+          setAccessToken(data?.data?.accessToken);
+          processRequestQueue(data?.data?.accessToken);
         })
         .catch(() => {
           removeTokens();

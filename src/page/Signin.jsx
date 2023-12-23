@@ -1,9 +1,9 @@
-import { useMutation } from "@tanstack/react-query";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { ErrorMessage, Field, Form, Formik } from "formik";
 import React, { Fragment, useState } from "react";
 import { BiLockAlt } from "react-icons/bi";
 import { FaEye, FaEyeSlash } from "react-icons/fa";
-import { Link, useNavigate } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 import adminAPI from "../api/adminAPI";
 import { logo } from "../assets/image";
@@ -12,6 +12,9 @@ import { setAccessToken, setRefreshToken } from "../utils/localStorageUtils";
 import signinValidationSchema from "../utils/validation/signinValidation";
 const Signin = () => {
   let navigate = useNavigate();
+  const queryClient = useQueryClient();
+  const { state } = useLocation();
+
   const initialValues = {
     username: "",
     password: "",
@@ -37,7 +40,14 @@ const Signin = () => {
           setAccessToken(response.data.data?.accessToken);
           setRefreshToken(response.data.data?.refreshToken);
           toast.success("Successfully login");
-          navigate("/");
+          queryClient.resetQueries();
+          if (state?.authSuccessRedirect) {
+            navigate(state?.authSuccessRedirect, {
+              replace: true,
+            });
+          } else {
+            navigate("/");
+          }
         } else {
           throw new Error();
         }
