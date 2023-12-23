@@ -1,48 +1,62 @@
+import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { ErrorMessage, Field, Form, Formik } from "formik";
 import React, { Fragment, useState } from "react";
-import signinValidationSchema from "../utils/validation/signinValidation";
-import { FaEye, FaEyeSlash } from "react-icons/fa";
-import { Progress } from "../components/common/Progress";
 import { BiLockAlt } from "react-icons/bi";
-import AuthService from "../service/AuthService";
+import { FaEye, FaEyeSlash } from "react-icons/fa";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
-import { Link, useNavigate } from "react-router-dom";
+import adminAPI from "../api/adminAPI";
 import { logo } from "../assets/image";
+import { Progress } from "../components/common/Progress";
+import { setAccessToken, setRefreshToken } from "../utils/localStorageUtils";
+import signinValidationSchema from "../utils/validation/signinValidation";
 const Signin = () => {
   let navigate = useNavigate();
+  const queryClient = useQueryClient();
+  const { state } = useLocation();
+
   const initialValues = {
     username: "",
     password: "",
   };
   const [showPassword, setShowPassword] = useState(false);
-  const [isLoading, setIsLoading] = useState(false);
   const togglePasswordVisibility = () => {
     setShowPassword((prevState) => !prevState);
   };
+
+  const { mutateAsync: signInMutationAsync, isLoading: isSigninLoading } =
+    useMutation((payload) => adminAPI.post("/api/Auth/AdminSignIn", payload));
+
   const handleSubmit = async (values, { setSubmitting, setErrors }) => {
-    setIsLoading(true);
+    const payload = {
+      email: values.username,
+      password: values.password,
+    };
 
-    AuthService.signin(values)
+    signInMutationAsync(payload)
       .then((response) => {
-        setIsLoading(false);
-
-        localStorage.setItem("token", `${response.data.token}`);
-        localStorage.setItem("role", `${response.data?.role}`);
-        localStorage.setItem("email", `${response.data?.email}`);
-        localStorage.setItem("userid", `${response.data?.userid}`);
-        localStorage.setItem("username", `${response.data?.username}`);
-        localStorage.setItem("profile", `${response.data?.profile}`);
-        // const user = response.data.username;
-        // dispatch({ type: "LOGIN", payload: user});
-        toast.success("Successfully login");
-        setSubmitting(false);
-        setIsLoading(false);
-        navigate("/");
+        if (response.data.data) {
+          console.log(response.data.data);
+          setAccessToken(response.data.data?.accessToken);
+          setRefreshToken(response.data.data?.refreshToken);
+          toast.success("Successfully login");
+          queryClient.resetQueries();
+          if (state?.authSuccessRedirect) {
+            navigate(state?.authSuccessRedirect, {
+              replace: true,
+            });
+          } else {
+            navigate("/");
+          }
+        } else {
+          throw new Error();
+        }
       })
       .catch((err) => {
-        setIsLoading(false);
-        toast.error("Something went Wrong!");
-        console.log("Err => ", err);
+        toast.error(err?.response?.data?.message ?? "Something went Wrong!");
+      })
+      .finally(() => {
+        setSubmitting(false);
       });
   };
 
@@ -171,7 +185,7 @@ const Signin = () => {
                         className="group relative w-full flex justify-center py-2 px-4 border border-transparent text-sm font-medium rounded-md text-white bg-gray-700 hover:bg-gray-900 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-yellow-500"
                       >
                         <span className="absolute left-0 inset-y-0 flex items-center pl-3">
-                          {isLoading ? (
+                          {isSigninLoading ? (
                             <Progress />
                           ) : (
                             <BiLockAlt
@@ -301,7 +315,7 @@ const Signin = () => {
                       className="group relative w-full flex justify-center py-2 px-4 border border-transparent text-sm font-medium rounded-md text-white bg-gray-700 hover:bg-gray-900 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-yellow-500"
                     >
                       <span className="absolute left-0 inset-y-0 flex items-center pl-3">
-                        {isLoading ? (
+                        {isSigninLoading ? (
                           <Progress />
                         ) : (
                           <BiLockAlt

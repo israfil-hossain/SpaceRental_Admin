@@ -1,36 +1,37 @@
+import CssBaseline from "@mui/material/CssBaseline";
+import { ThemeProvider } from "@mui/material/styles";
+import { QueryClientProvider } from "@tanstack/react-query";
 import React, { StrictMode } from "react";
 import ReactDOM from "react-dom/client";
-import { BrowserRouter } from "react-router-dom";
-import "./index.css";
-
-import MenuContextProvider from "./context/MenuContext";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import { ThemeProvider } from "@mui/material/styles";
-import CssBaseline from "@mui/material/CssBaseline";
-import { QueryClient, QueryClientProvider } from "react-query";
-import { theme } from "./constants/theme";
 import App from "./App";
+import adminQueryClient from "./api/adminQueryClient";
+import { theme } from "./constants/theme";
+import AuthUserProvider from "./context/AuthUserProvider";
+import MenuContextProvider from "./context/MenuContext";
+import "./index.css";
+
 const root = ReactDOM.createRoot(document.getElementById("root"));
-const queryClient = new QueryClient();
 
 root.render(
   <StrictMode>
-      <ThemeProvider theme={theme}>
-        <CssBaseline />
-        <BrowserRouter>
+    <ThemeProvider theme={theme}>
+      <CssBaseline />
+      <QueryClientProvider client={adminQueryClient}>
+        <AuthUserProvider>
           <MenuContextProvider>
-            <ToastContainer
-              position="top-right"
-              autoClose={1500}
-              closeOnClick
-              theme="light"
-            />
-            <QueryClientProvider client={queryClient}>
-              <App />
-            </QueryClientProvider>
+            <App />
           </MenuContextProvider>
-        </BrowserRouter>
-      </ThemeProvider>
+        </AuthUserProvider>
+
+        <ToastContainer
+          position="top-right"
+          autoClose={1500}
+          closeOnClick
+          theme="light"
+        />
+      </QueryClientProvider>
+    </ThemeProvider>
   </StrictMode>
 );
