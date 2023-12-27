@@ -1,6 +1,7 @@
 import { Box } from "@mui/material";
 import React from "react";
-import { loader } from "../../assets/image";
+import { loader } from "../../assets";
+
 
 export const CommonProgress = () => {
   return (
