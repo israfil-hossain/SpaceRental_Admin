@@ -1,34 +1,30 @@
-import React, { Fragment, useEffect, useState } from "react";
+import React, { Fragment, useState } from "react";
 import { Link } from "react-router-dom";
 
-import { RiStore2Line } from "react-icons/ri";
-import { PiUsersThreeLight } from "react-icons/pi";
-import { MdOutlinePayments } from "react-icons/md";
-import { FiCheckCircle } from "react-icons/fi";
-import PackageBreadcrumb from "../components/common/PackageBreadcrumb";
+import { Box, Breadcrumbs } from "@mui/material";
 import { AiOutlineAppstore } from "react-icons/ai";
-import {
-  Box,
-  Breadcrumbs,
-} from "@mui/material";
+import { FiCheckCircle } from "react-icons/fi";
+import { MdOutlinePayments } from "react-icons/md";
+import { PiUsersThreeLight } from "react-icons/pi";
+import { RiStore2Line } from "react-icons/ri";
 import IncomeAreaChart from "../components/Dashboard/IncomeAreaChart";
+import PackageBreadcrumb from "../components/common/PackageBreadcrumb";
 
-import userData from "../constants/Data/dashboardData";
-import CommonSelect from "../components/ui/CommonSelect";
 import DefaultTable from "../components/common/DefaultTable";
+import CommonSelect from "../components/ui/CommonSelect";
+import userData from "../constants/Data/dashboardData";
 
-import { earnings,months } from "../constants/Data/constantsData";
-import { topUserHeader } from "../constants/TableColumns/headings";
 import StoreCard from "../components/common/StoreCard";
+import { earnings, months } from "../constants/Data/constantsData";
+import { topUserHeader } from "../constants/TableColumns/headings";
 import { getCurrentMonth } from "../utils/CommonFunction";
 
 const Dashboard = () => {
-  const currentMonth = getCurrentMonth(); 
+  const currentMonth = getCurrentMonth();
   const [earning, setEarnings] = useState("week");
   const [selectedOption, setSelectedOption] = useState(currentMonth);
   const [page, setPage] = useState(1);
   const [size, setSize] = useState(10);
-
 
   return (
     <Fragment>
@@ -92,7 +88,6 @@ const Dashboard = () => {
               <p className="text-[16px] font-bold font-sans">Earnings</p>
               <Box sx={{ minWidth: 120 }}>
                 <CommonSelect
-                  
                   labelId={"earning-label"}
                   id={"earning-label-id"}
                   options={earnings}
@@ -114,7 +109,6 @@ const Dashboard = () => {
                 <CommonSelect
                   labelId={"months-select"}
                   id={"months-select-id"}
-                  
                   options={months}
                   value={selectedOption}
                   setSelect={setSelectedOption}
@@ -142,7 +136,6 @@ const Dashboard = () => {
             <StoreCard />
             <StoreCard />
             <StoreCard />
-            
           </div>
         </div>
 

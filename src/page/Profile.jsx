@@ -1,23 +1,20 @@
 //External Import
-import React, { Fragment, useEffect, useState } from "react";
 import { Box, Breadcrumbs } from "@mui/material";
+import React, { Fragment, useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 
 //Internal Import
 import PackageBreadcrumb from "../components/common/PackageBreadcrumb";
-import UserService from "../service/UserService";
 
-import { FaEye, FaEyeSlash, FaUserAlt } from "react-icons/fa";
 import { BiEdit, BiLockAlt } from "react-icons/bi";
+import { FaEye, FaEyeSlash, FaUserAlt } from "react-icons/fa";
 import { MdEdit } from "react-icons/md";
 import { toast } from "react-toastify";
-import { HiOutlineKey } from "react-icons/hi";
 
-import AddUser from "../components/Users/AddUser";
-import ChangePassword from "../components/Users/ChangePassword";
 import { ErrorMessage, Field, Form, Formik } from "formik";
-import passwordValidationSchema from "../utils/validation/passwordValidation";
+import AddUser from "../components/Users/AddUser";
 import CommonButton from "../components/ui/CommonButton";
+import passwordValidationSchema from "../utils/validation/passwordValidation";
 
 const Profile = () => {
   const userid = localStorage.getItem("userid");
@@ -33,7 +30,6 @@ const Profile = () => {
   const handlePClose = () => setPopen(false);
   const [showPassword, setShowPassword] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
-
 
   const togglePasswordVisibility = () => {
     setShowPassword((prevState) => !prevState);
@@ -167,37 +163,34 @@ const Profile = () => {
             </div>
 
             <div className="lg:w-1/2 rounded-xl px-4 py-4 bg-white">
-
-            <div>
-            <Formik
-              initialValues={{
-                password:"",
-              }}
-              validationSchema={passwordValidationSchema}
-              // onSubmit={data ? handleUpdate : handleSubmit}
-            >
-              {({
-                values,
-                handleChange,
-                errors,
-                touched,
-                isSubmitting,
-                resetForm,
-              }) => (
-                <Form>
-                  {/* <>{JSON.stringify(values)}</> */}
-                  <Box
-                    sx={{
-                      pb: 0,
-                      display: "flex",
-                      flexDirection: "row",
-                      justifyContent: "space-between",
-                    }}
-                  >
-                    <p >
-                      Changes Password
-                    </p>
-                    {/* <div style={{}}>
+              <div>
+                <Formik
+                  initialValues={{
+                    password: "",
+                  }}
+                  validationSchema={passwordValidationSchema}
+                  // onSubmit={data ? handleUpdate : handleSubmit}
+                >
+                  {({
+                    values,
+                    handleChange,
+                    errors,
+                    touched,
+                    isSubmitting,
+                    resetForm,
+                  }) => (
+                    <Form>
+                      {/* <>{JSON.stringify(values)}</> */}
+                      <Box
+                        sx={{
+                          pb: 0,
+                          display: "flex",
+                          flexDirection: "row",
+                          justifyContent: "space-between",
+                        }}
+                      >
+                        <p>Changes Password</p>
+                        {/* <div style={{}}>
                       <IconButton
                         aria-label="edit"
                         onClick={() => handleResetAndClose(resetForm)}
@@ -212,171 +205,167 @@ const Profile = () => {
                         />
                       </IconButton>
                     </div> */}
-                  </Box>
-                  {/* <Divider sx={{ mb: 2 }}>
+                      </Box>
+                      {/* <Divider sx={{ mb: 2 }}>
                     <Chip label="Password" />
                   </Divider> */}
-                  
-                    <div className="mt-5 px-5">
-                      <label
-                        htmlFor="password"
-                        className="block text-sm font-medium text-gray-700"
-                      >
-                       Old Password
-                      </label>
-                      <div className="mt-1">
-                        <div className="relative">
-                          <Field
-                            // type={showPassword ? "text" : "password"}
-                            name="password"
-                            id="password"
-                            placeholder="Enter Old Password"
-                            autoComplete="current-password"
-                            value={values.password}
-                            onChange={handleChange}
-                            error={touched.password && errors.password}
-                            className={`appearance-none block w-full px-3 py-2 border border-gray-300 
+
+                      <div className="mt-5 px-5">
+                        <label
+                          htmlFor="password"
+                          className="block text-sm font-medium text-gray-700"
+                        >
+                          Old Password
+                        </label>
+                        <div className="mt-1">
+                          <div className="relative">
+                            <Field
+                              // type={showPassword ? "text" : "password"}
+                              name="password"
+                              id="password"
+                              placeholder="Enter Old Password"
+                              autoComplete="current-password"
+                              value={values.password}
+                              onChange={handleChange}
+                              error={touched.password && errors.password}
+                              className={`appearance-none block w-full px-3 py-2 border border-gray-300 
                             rounded-xl shadow-sm placeholder-gray-400 
                             focus:ring-yellow-500 focus:border-yellow-500 focus:ring-1 sm:text-sm ${
-                        touched.password && errors.password
-                          ? "border-red-500"
-                          : ""
-                      }`}
-                          />
-                          <button
-                            type="button"
-                            className="absolute inset-y-0 right-0 flex items-center px-2"
-                            onClick={togglePasswordVisibility}
-                          >
-                            {showPassword ? <FaEyeSlash /> : <FaEye />}
-                          </button>
-                        </div>
-                        <ErrorMessage
-                          name="password"
-                          component="p"
-                          className="mt-2 text-sm text-red-600"
-                        />
-                      </div>
-                    </div>
-
-                    <div className="mt-5 px-5">
-                      <label
-                        htmlFor="password"
-                        className="block text-sm font-medium text-gray-700"
-                      >
-                       New Password
-                      </label>
-                      <div className="mt-1">
-                        <div className="relative">
-                          <Field
-                            // type={showPassword ? "text" : "password"}
+                              touched.password && errors.password
+                                ? "border-red-500"
+                                : ""
+                            }`}
+                            />
+                            <button
+                              type="button"
+                              className="absolute inset-y-0 right-0 flex items-center px-2"
+                              onClick={togglePasswordVisibility}
+                            >
+                              {showPassword ? <FaEyeSlash /> : <FaEye />}
+                            </button>
+                          </div>
+                          <ErrorMessage
                             name="password"
-                            id="password"
-                            placeholder="Enter New Password"
-                            autoComplete="current-password"
-                            value={values.password}
-                            onChange={handleChange}
-                            error={touched.password && errors.password}
-                            className={`appearance-none block w-full px-3 py-2 border border-gray-300 
+                            component="p"
+                            className="mt-2 text-sm text-red-600"
+                          />
+                        </div>
+                      </div>
+
+                      <div className="mt-5 px-5">
+                        <label
+                          htmlFor="password"
+                          className="block text-sm font-medium text-gray-700"
+                        >
+                          New Password
+                        </label>
+                        <div className="mt-1">
+                          <div className="relative">
+                            <Field
+                              // type={showPassword ? "text" : "password"}
+                              name="password"
+                              id="password"
+                              placeholder="Enter New Password"
+                              autoComplete="current-password"
+                              value={values.password}
+                              onChange={handleChange}
+                              error={touched.password && errors.password}
+                              className={`appearance-none block w-full px-3 py-2 border border-gray-300 
                             rounded-xl shadow-sm placeholder-gray-400 
                             focus:ring-yellow-500 focus:border-yellow-500 focus:ring-1 sm:text-sm ${
-                        touched.password && errors.password
-                          ? "border-red-500"
-                          : ""
-                      }`}
-                          />
-                          <button
-                            type="button"
-                            className="absolute inset-y-0 right-0 flex items-center px-2"
-                            onClick={togglePasswordVisibility}
-                          >
-                            {showPassword ? <FaEyeSlash /> : <FaEye />}
-                          </button>
-                        </div>
-                        <ErrorMessage
-                          name="password"
-                          component="p"
-                          className="mt-2 text-sm text-red-600"
-                        />
-                      </div>
-                    </div>
-
-                    <div className="mt-5 px-5">
-                      <label
-                        htmlFor="password"
-                        className="block text-sm font-medium text-gray-700"
-                      >
-                       Retype New Password
-                      </label>
-                      <div className="mt-1">
-                        <div className="relative">
-                          <Field
-                            // type={showPassword ? "text" : "password"}
+                              touched.password && errors.password
+                                ? "border-red-500"
+                                : ""
+                            }`}
+                            />
+                            <button
+                              type="button"
+                              className="absolute inset-y-0 right-0 flex items-center px-2"
+                              onClick={togglePasswordVisibility}
+                            >
+                              {showPassword ? <FaEyeSlash /> : <FaEye />}
+                            </button>
+                          </div>
+                          <ErrorMessage
                             name="password"
-                            id="password"
-                            placeholder="Retype New Password"
-                            autoComplete="current-password"
-                            value={values.password}
-                            onChange={handleChange}
-                            error={touched.password && errors.password}
-                            className={`appearance-none block w-full px-3 py-2 border border-gray-300 
+                            component="p"
+                            className="mt-2 text-sm text-red-600"
+                          />
+                        </div>
+                      </div>
+
+                      <div className="mt-5 px-5">
+                        <label
+                          htmlFor="password"
+                          className="block text-sm font-medium text-gray-700"
+                        >
+                          Retype New Password
+                        </label>
+                        <div className="mt-1">
+                          <div className="relative">
+                            <Field
+                              // type={showPassword ? "text" : "password"}
+                              name="password"
+                              id="password"
+                              placeholder="Retype New Password"
+                              autoComplete="current-password"
+                              value={values.password}
+                              onChange={handleChange}
+                              error={touched.password && errors.password}
+                              className={`appearance-none block w-full px-3 py-2 border border-gray-300 
                             rounded-xl shadow-sm placeholder-gray-400 
                             focus:ring-yellow-500 focus:border-yellow-500 focus:ring-1 sm:text-sm ${
-                        touched.password && errors.password
-                          ? "border-red-500"
-                          : ""
-                      }`}
+                              touched.password && errors.password
+                                ? "border-red-500"
+                                : ""
+                            }`}
+                            />
+                            <button
+                              type="button"
+                              className="absolute inset-y-0 right-0 flex items-center px-2"
+                              onClick={togglePasswordVisibility}
+                            >
+                              {showPassword ? <FaEyeSlash /> : <FaEye />}
+                            </button>
+                          </div>
+                          <ErrorMessage
+                            name="password"
+                            component="p"
+                            className="mt-2 text-sm text-red-600"
                           />
-                          <button
-                            type="button"
-                            className="absolute inset-y-0 right-0 flex items-center px-2"
-                            onClick={togglePasswordVisibility}
-                          >
-                            {showPassword ? <FaEyeSlash /> : <FaEye />}
-                          </button>
                         </div>
-                        <ErrorMessage
-                          name="password"
-                          component="p"
-                          className="mt-2 text-sm text-red-600"
-                        />
                       </div>
-                    </div>
-               
 
-                  <div className="my-8 flex justify-around item-center w-full ">
-                    <CommonButton 
-                      text="Reset"
-                      className="border border-primary hover:bg-gray-100 w-40 flex justify-center items-center"
-                    />
-                    <button
-                      type="submit"
-                      disabled={isSubmitting}
-                      className="group relative w-80 flex justify-center py-3 px-4 border border-transparent text-sm font-medium rounded-md text-white bg-primary hover:bg-[#cacc57] focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-500"
-                    >
-                      <span className="absolute left-0 inset-y-0 flex items-center pl-3">
-                        {isLoading ? (
-                          <Progress />
-                        ) : (
-                          <BiLockAlt
-                            className="h-5 w-5 text-gray-600 group-hover:text-gray-800"
-                            aria-hidden="true"
-                          />
-                        )}
-                      </span>
-                      Save Changes
-                    </button>
-                  </div>
-                </Form>
-              )}
-            </Formik>
-          </div>
-              
-            
-              
+                      <div className="my-8 flex justify-around item-center w-full ">
+                        <CommonButton
+                          text="Reset"
+                          className="border border-primary hover:bg-gray-100 w-40 flex justify-center items-center"
+                        />
+                        <button
+                          type="submit"
+                          disabled={isSubmitting}
+                          className="group relative w-80 flex justify-center py-3 px-4 border border-transparent text-sm font-medium rounded-md text-white bg-primary hover:bg-[#cacc57] focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-500"
+                        >
+                          <span className="absolute left-0 inset-y-0 flex items-center pl-3">
+                            {isLoading ? (
+                              <Progress />
+                            ) : (
+                              <BiLockAlt
+                                className="h-5 w-5 text-gray-600 group-hover:text-gray-800"
+                                aria-hidden="true"
+                              />
+                            )}
+                          </span>
+                          Save Changes
+                        </button>
+                      </div>
+                    </Form>
+                  )}
+                </Formik>
+              </div>
             </div>
           </div>
-          
+
           <AddUser
             data={data}
             open={open}

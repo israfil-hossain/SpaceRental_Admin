@@ -1,23 +1,22 @@
 //External Import
-import React, { Fragment, useEffect, useState } from "react";
 import { Box, Breadcrumbs } from "@mui/material";
-import { Link } from "react-router-dom";
 import PropTypes from "prop-types";
+import React, { Fragment, useState } from "react";
+import { Link } from "react-router-dom";
 
 //Internal Import
-import PackageBreadcrumb from "../components/common/PackageBreadcrumb";
-import UserService from "../service/UserService";
 import { FaUserAlt } from "react-icons/fa";
-import { toast } from "react-toastify";
+import PackageBreadcrumb from "../components/common/PackageBreadcrumb";
 
-import CommonSelect from "../components/ui/CommonSelect";
+import Tab from "@mui/material/Tab";
+import Tabs from "@mui/material/Tabs";
+import { useQuery } from "@tanstack/react-query";
 import DefaultTable from "../components/common/DefaultTable";
+import CustomSearchField from "../components/common/SearchField";
+import CommonSelect from "../components/ui/CommonSelect";
+import { months } from "../constants/Data/constantsData";
 import userData from "../constants/Data/dashboardData";
 import { userHeading } from "../constants/TableColumns/userHeadings";
-import { months } from "../constants/Data/constantsData";
-import CustomSearchField from "../components/common/SearchField";
-import Tabs from "@mui/material/Tabs";
-import Tab from "@mui/material/Tab";
 import { getCurrentMonth } from "../utils/CommonFunction";
 
 function CustomTabPanel(props) {
@@ -54,20 +53,21 @@ function a11yProps(index) {
 }
 
 const Users = () => {
-  
   const [page, setPage] = useState(1);
   const [size, setSize] = useState(10);
   const [value, setValue] = React.useState(0);
-  const currentMonth = getCurrentMonth(); 
+  const currentMonth = getCurrentMonth();
+
+  const { data: allUsers = {} } = useQuery([`/api/User/GetAll`]);
+
+  console.log(allUsers);
 
   const [selectedOption, setSelectedOption] = useState(currentMonth);
- 
 
   const handleChange = (event, newValue) => {
     setValue(newValue);
   };
 
-  
   return (
     <Fragment>
       <div>
@@ -114,7 +114,7 @@ const Users = () => {
                 <DefaultTable
                   isLoading={false}
                   headings={userHeading}
-                  data={userData?.spaceOwners}
+                  data={allUsers?.data || []}
                   disablePagination={false}
                   size={size}
                   setSize={setSize}

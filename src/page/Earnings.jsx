@@ -1,30 +1,29 @@
-// External Import 
-import React, { Fragment, useEffect, useState } from "react";
-import { Link } from "react-router-dom";
+// External Import
 import { Box, Breadcrumbs } from "@mui/material";
+import React, { Fragment, useState } from "react";
+import { Link } from "react-router-dom";
 
-//icons 
+//icons
 import { FiDownload } from "react-icons/fi";
 import { MdOutlinePayments } from "react-icons/md";
 
-// Internal Import 
-import PackageBreadcrumb from "../components/common/PackageBreadcrumb";
+// Internal Import
 import IncomeAreaChart from "../components/Dashboard/IncomeAreaChart";
-import userData from "../constants/Data/dashboardData";
-import CommonSelect from "../components/ui/CommonSelect";
 import DefaultTable from "../components/common/DefaultTable";
+import PackageBreadcrumb from "../components/common/PackageBreadcrumb";
+import CommonSelect from "../components/ui/CommonSelect";
+import userData from "../constants/Data/dashboardData";
 
-import { earnings, months } from "../constants/Data/constantsData";
 import {
+  greenMoney,
+  orangeMoney,
   redMoney,
   yellowMoney,
-  orangeMoney,
-  greenMoney,
 } from "../assets/images/icons";
-import { userHeading } from "../constants/TableColumns/userHeadings";
 import CommonButton from "../components/ui/CommonButton";
+import { earnings, months } from "../constants/Data/constantsData";
+import { userHeading } from "../constants/TableColumns/userHeadings";
 import { getCurrentMonth } from "../utils/CommonFunction";
-
 
 const Earnings = () => {
   const currentMonth = getCurrentMonth();
@@ -32,8 +31,6 @@ const Earnings = () => {
   const [selectedOption, setSelectedOption] = useState(currentMonth);
   const [page, setPage] = useState(1);
   const [size, setSize] = useState(10);
-
- 
 
   const handleChange = (event) => {
     setEarnings(event.target.value);
@@ -123,7 +120,6 @@ const Earnings = () => {
                 <CommonSelect
                   labelId={"months-select"}
                   id={"months-select-id"}
-                 
                   options={months}
                   value={selectedOption}
                   setSelect={setSelectedOption}
@@ -131,13 +127,16 @@ const Earnings = () => {
                 <CommonSelect
                   labelId={"months-select"}
                   id={"months-select-id"}
-                  
                   options={months}
                   value={selectedOption}
                   setSelect={setSelectedOption}
                 />
                 <div className="flex justify-center items-center">
-                <CommonButton className="bg-primary hover:bg-secondary" text={"Download Csv"} icon={<FiDownload />}/>
+                  <CommonButton
+                    className="bg-primary hover:bg-secondary"
+                    text={"Download Csv"}
+                    icon={<FiDownload />}
+                  />
                 </div>
               </div>
             </div>

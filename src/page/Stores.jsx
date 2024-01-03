@@ -1,27 +1,22 @@
 //External Import
-import React, { Fragment, useEffect, useState } from "react";
 import { Box, Breadcrumbs } from "@mui/material";
+import React, { Fragment, useState } from "react";
 import { Link } from "react-router-dom";
 
 //Internal Import
 import PackageBreadcrumb from "../components/common/PackageBreadcrumb";
 
-import QuizService from "../service/QuizService";
-import UserService from "../service/UserService";
-import { CommonProgress } from "../components/common/CommonProgress";
-import ShuffleArray from "../constants/ShuffleArray";
+import { RiStore2Line } from "react-icons/ri";
 import CustomSearchField from "../components/common/SearchField";
+import StoreCard from "../components/common/StoreCard";
 import CommonSelect from "../components/ui/CommonSelect";
 import { months } from "../constants/Data/constantsData";
-import { RiStore2Line } from "react-icons/ri";
-import StoreCard from "../components/common/StoreCard";
 import { getCurrentMonth } from "../utils/CommonFunction";
 
 const Stores = () => {
-  const currentMonth = getCurrentMonth(); 
+  const currentMonth = getCurrentMonth();
   const [selectedOption, setSelectedOption] = useState(currentMonth);
 
- 
   return (
     <Fragment>
       <div>
@@ -29,10 +24,7 @@ const Stores = () => {
           <Breadcrumbs aria-label="breadcrumb">
             <Link underline="hover" color="grey" href="/category">
               <Box sx={{ justifyContent: "center", display: "flex" }}>
-                <RiStore2Line
-                  size={23}
-                  className="min-w-max text-primary"
-                />
+                <RiStore2Line size={23} className="min-w-max text-primary" />
                 <span className="text-primary ">&nbsp;Stores </span>
               </Box>
             </Link>
@@ -46,11 +38,9 @@ const Stores = () => {
             <CommonSelect
               labelId={"months-select"}
               id={"months-select-id"}
-              
               options={months}
               value={selectedOption}
               setSelect={setSelectedOption}
-             
             />
           </div>
         </div>

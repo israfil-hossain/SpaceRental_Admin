@@ -6,10 +6,10 @@ import { FaEye, FaEyeSlash } from "react-icons/fa";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 import adminAPI from "../api/adminAPI";
-import { logo } from "../assets/image";
 import { Progress } from "../components/common/Progress";
 import { setAccessToken, setRefreshToken } from "../utils/localStorageUtils";
 import signinValidationSchema from "../utils/validation/signinValidation";
+
 const Signin = () => {
   let navigate = useNavigate();
   const queryClient = useQueryClient();

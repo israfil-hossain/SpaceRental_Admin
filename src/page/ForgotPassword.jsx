@@ -1,11 +1,12 @@
+import { Field, Form, Formik } from "formik";
 import React, { Fragment, useState } from "react";
-import { ErrorMessage, Field, Form, Formik } from "formik";
-import forgotPasswordValidationSchema from "../utils/validation/forgotPasswordValidation";
-import { Progress } from "../components/common/Progress";
 import { BiLockAlt } from "react-icons/bi";
-import AuthService from "../service/AuthService";
-import { toast } from "react-toastify"; 
 import { useNavigate } from "react-router-dom";
+import { toast } from "react-toastify";
+import { Progress } from "../components/common/Progress";
+import AuthService from "../service/AuthService";
+import forgotPasswordValidationSchema from "../utils/validation/forgotPasswordValidation";
+
 const ForgotPassword = () => {
   const initialValues = {
     email: "",
@@ -15,14 +16,15 @@ const ForgotPassword = () => {
 
   const handleSubmit = async (values, { setSubmitting, setErrors }) => {
     setIsLoading(true);
-    AuthService.forgotPassword(values).then((response)=>{
-        console.log("Response", response); 
-    
-            toast.success("Successfully Reset Password Link Send by Your Email !");
-            setIsLoading(false);
-            navigate("/login");
-      
-    }).catch((err) => {
+    AuthService.forgotPassword(values)
+      .then((response) => {
+        console.log("Response", response);
+
+        toast.success("Successfully Reset Password Link Send by Your Email !");
+        setIsLoading(false);
+        navigate("/login");
+      })
+      .catch((err) => {
         setIsLoading(false);
         toast.error("Something went Wrong!");
         console.log("Err => ", err);
