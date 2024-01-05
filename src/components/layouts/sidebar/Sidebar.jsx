@@ -1,20 +1,22 @@
-import { useEffect, useState, useContext } from "react";
-import { useRef } from "react";
 import { motion } from "framer-motion";
+import { useContext, useEffect, useRef, useState } from "react";
 import { useMediaQuery } from "react-responsive";
 import { Link, NavLink, useLocation } from "react-router-dom";
 import { MenuContext } from "../../../context/MenuContext";
 
 // * React icons
 
-import { AiFillTrophy, AiOutlineAppstore, AiOutlineControl, AiOutlineUser } from "react-icons/ai";
-import { BsBoxSeam, BsPassFill, BsPatchExclamationFill, BsPerson, BsQuestionDiamondFill } from "react-icons/bs";
-import { GiBlackBook } from "react-icons/gi";
-import {PiUsersThreeLight} from "react-icons/pi";
-import { MdContactSupport, MdMenu, MdOutlinePayments, MdOutlineQuiz } from "react-icons/md";
-import { logo, profile } from "../../../assets";
+import { useQueryClient } from "@tanstack/react-query";
+import { AiOutlineAppstore, AiOutlineControl } from "react-icons/ai";
+import { BsPerson } from "react-icons/bs";
 import { FiLogOut } from "react-icons/fi";
-import {RiStore2Line } from "react-icons/ri";
+import { MdContactSupport, MdMenu, MdOutlinePayments } from "react-icons/md";
+import { PiUsersThreeLight } from "react-icons/pi";
+import { RiStore2Line } from "react-icons/ri";
+import { logo, profile } from "../../../assets";
+import { useAuthUserContext } from "../../../context/AuthUserProvider";
+import { convertToTitleCase } from "../../../utils/CommonFunction";
+import { removeTokens } from "../../../utils/localStorageUtils";
 
 const Sidebar = () => {
   let isTabletMid = useMediaQuery({ query: "(max-width: 768px)" });
@@ -22,8 +24,8 @@ const Sidebar = () => {
   const [open, setOpen] = useState(isTabletMid ? false : true);
   const sidebarRef = useRef();
   const { pathname } = useLocation();
-
-
+  const { userData } = useAuthUserContext();
+  const queryClient = useQueryClient();
 
   useEffect(() => {
     if (isTabletMid) {
@@ -72,6 +74,12 @@ const Sidebar = () => {
         },
       };
 
+  const handleUserLogout = () => {
+    removeTokens();
+    queryClient.resetQueries();
+    navigate("/login");
+  };
+
   return (
     <>
       <div
@@ -80,7 +88,7 @@ const Sidebar = () => {
           isOpen ? "block" : "hidden"
         } `}
       ></div>
-      
+
       <motion.div
         ref={sidebarRef}
         variants={Nav_animation}
@@ -92,7 +100,7 @@ const Sidebar = () => {
       >
         <Link to="/">
           <div className="flex items-center gap-2.5 font-medium border-b py-3 border-slate-300  mx-3 z-50 ">
-            <img src={logo}  alt="logo" />
+            <img src={logo} alt="logo" />
           </div>
         </Link>
 
@@ -100,10 +108,7 @@ const Sidebar = () => {
           <ul className="whitespace-pre px-2.5 text-[0.9rem] py-5 flex flex-col gap-1  font-medium overflow-x-hidden scrollbar-thin scrollbar-track-white scrollbar-thumb-slate-100   md:h-[68%] h-[70%]">
             <li>
               <NavLink to={"/"} className="link text-white  font-sans">
-                <AiOutlineAppstore
-                  size={23}
-                  className="min-w-max text-white"
-                />
+                <AiOutlineAppstore size={23} className="min-w-max text-white" />
                 Dashboard
               </NavLink>
             </li>
@@ -111,14 +116,17 @@ const Sidebar = () => {
             <li>
               <NavLink to={"/users"} className="link text-white  font-sans">
                 <PiUsersThreeLight size={23} className="min-w-max text-white" />
-                  Users
+                Users
               </NavLink>
             </li>
 
             <li>
               <NavLink to={"/stores"} className="link text-white  font-sans">
-                <RiStore2Line size={23} className="min-w-max active:text-black text-white" />
-                  Stores
+                <RiStore2Line
+                  size={23}
+                  className="min-w-max active:text-black text-white"
+                />
+                Stores
               </NavLink>
             </li>
             {/* {location.pathname.startsWith("/questions") && (
@@ -134,44 +142,71 @@ const Sidebar = () => {
             )} */}
             <li>
               <NavLink to={"/earnings"} className="link text-white  font-sans">
-                <MdOutlinePayments size={23} className="min-w-max active:text-black text-white" />
-                 Earnings
+                <MdOutlinePayments
+                  size={23}
+                  className="min-w-max active:text-black text-white"
+                />
+                Earnings
               </NavLink>
             </li>
             <li>
-              <NavLink to={"/control-panel"} className="link text-white  font-sans">
-                <AiOutlineControl size={23} className="min-w-max active:text-black text-white" />
+              <NavLink
+                to={"/control-panel"}
+                className="link text-white  font-sans"
+              >
+                <AiOutlineControl
+                  size={23}
+                  className="min-w-max active:text-black text-white"
+                />
                 Control Panel
               </NavLink>
             </li>
 
-            
             <li>
               <NavLink to={"/support"} className="link text-white font-sans">
-                <MdContactSupport size={23} className="min-w-max active:text-black  text-white " />
-                  Support
+                <MdContactSupport
+                  size={23}
+                  className="min-w-max active:text-black  text-white "
+                />
+                Support
               </NavLink>
             </li>
             <li>
               <NavLink to={"/profile"} className="link text-white  font-sans">
-                <BsPerson size={23} className="min-w-max active:text-black active:bg-black text-white " />
+                <BsPerson
+                  size={23}
+                  className="min-w-max active:text-black active:bg-black text-white "
+                />
                 Profile
               </NavLink>
             </li>
-
-           
-
-            
           </ul>
-          <div className={`pb-20 h-40 ${isOpen ? "flex" : "flex-col space-y-4"} p-3  justify-between items-center `}>
-           <img src={profile} alt="profile" />
-            <div className={` ${isOpen ? "block" : "hidden"} flex flex-col items-start px-2`}>
-              <h2 className="text-[14px]">Murad Hossain</h2>
-              <p className="text-[10px]">Admin</p>
+          <div
+            className={`pb-20 h-40 ${
+              isOpen ? "flex" : "flex-col space-y-4"
+            } p-3 items-center `}
+          >
+            <img src={profile} alt="profile" />
+            <div className="flex-grow">
+              <div
+                className={` ${
+                  isOpen ? "block" : "hidden"
+                } flex flex-col items-start px-2`}
+              >
+                <h2 className="text-[14px]">
+                  {userData?.fullName || "Admin User"}
+                </h2>
+                <p className="text-[10px]">
+                  {convertToTitleCase(userData?.role || "")}
+                </p>
+              </div>
             </div>
-            <div className="rounded-full p-2 bg-[#B3FAFF]">
-              <FiLogOut className=" text-black min-w-max"/>
-            </div>
+            <button
+              className="rounded-full p-2 bg-[#B3FAFF]"
+              onClick={handleUserLogout}
+            >
+              <FiLogOut className=" text-black min-w-max" />
+            </button>
           </div>
         </div>
         {/* <motion.div
@@ -203,12 +238,12 @@ const Sidebar = () => {
         </motion.div> */}
       </motion.div>
       <div
-            className="w-8 h-8 bg-gray-700  mt-5 flex p-2 rounded-r-md mr-3 focus:bg-gray-400 hover:bg-gray-900 shadow-md  "
-            onClick={toggleMenu}
-          >
-            {" "}
-            <MdMenu className="text-white" />
-          </div>
+        className="w-8 h-8 bg-gray-700  mt-5 flex p-2 rounded-r-md mr-3 focus:bg-gray-400 hover:bg-gray-900 shadow-md  "
+        onClick={toggleMenu}
+      >
+        {" "}
+        <MdMenu className="text-white" />
+      </div>
     </>
   );
 };

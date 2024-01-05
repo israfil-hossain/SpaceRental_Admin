@@ -74,13 +74,13 @@ const Signin = () => {
             <div className="mb-6 sm:mx-auto sm:w-full sm:max-w-md flex items-center justify-center">
               <div className="mb-6 sm:mx-auto sm:w-full sm:max-w-md flex items-center justify-center">
                 <div className="flex flex-col items-center  text-center justify-between p-8">
-                  <img
+                  {/* <img
                     alt=""
                     src={logo}
                     width="180px"
                     height="100px"
                     className="items-center mt-5"
-                  />
+                  /> */}
                   {/* <img alt="" src={logo2} width="250px" height="200px " className="items-center mt-5"/> */}
                 </div>
               </div>{" "}
@@ -214,7 +214,7 @@ const Signin = () => {
         <div className=" lg:hidden bg-white  px-6 py-8 mt-5 shadow-md rounded-lg  hover:shadow-lg">
           <div className="  flex justify-center items-center w-full mb-5">
             <div className="w-20 h-20 rounded-md ">
-              <img src={logo} alt="" className="" />
+              {/* <img src={logo} alt="" className="" /> */}
             </div>
           </div>
           <div className="mb-6 ">
