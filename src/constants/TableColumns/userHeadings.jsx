@@ -1,5 +1,9 @@
 import { CiMail, CiPhone } from "react-icons/ci";
 import { calender } from "../../assets/images/icons";
+import {
+  convertToTitleCase,
+  formatDateString,
+} from "../../utils/CommonFunction";
 
 const userHeading = [
   {
@@ -25,9 +29,9 @@ const userHeading = [
         <p
           className={`${
             value === "space owners" ? "bg-[#f8f8cd]" : "bg-[#CDF8D8]"
-          } w-28 rounded-lg p-1 text-center`}
+          } rounded-lg p-1 text-center`}
         >
-          {value}
+          {convertToTitleCase(value)}
         </p>
       </div>
     ),
@@ -60,13 +64,13 @@ const userHeading = [
     key: "dateJoined",
     className: "custom-class",
     render: (value) => (
-      <div className="flex space-x-2 w-28">
+      <div className="flex space-x-2">
         <img
           src={calender}
           alt="calender"
           style={{ width: 20, height: 20, borderRadius: "50%" }}
         />
-        <p>{value}</p>
+        <p>{formatDateString(value)}</p>
       </div>
     ),
   },

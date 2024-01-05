@@ -1,6 +1,5 @@
 //External Import
 import { Box, Breadcrumbs } from "@mui/material";
-import PropTypes from "prop-types";
 import React, { Fragment, useState } from "react";
 import { Link } from "react-router-dom";
 
@@ -15,57 +14,24 @@ import DefaultTable from "../components/common/DefaultTable";
 import CustomSearchField from "../components/common/SearchField";
 import CommonSelect from "../components/ui/CommonSelect";
 import { months } from "../constants/Data/constantsData";
-import userData from "../constants/Data/dashboardData";
 import { userHeading } from "../constants/TableColumns/userHeadings";
 import { getCurrentMonth } from "../utils/CommonFunction";
-
-function CustomTabPanel(props) {
-  const { children, value, index, ...other } = props;
-
-  return (
-    <div
-      role="tabpanel"
-      hidden={value !== index}
-      id={`simple-tabpanel-${index}`}
-      aria-labelledby={`simple-tab-${index}`}
-      {...other}
-    >
-      {value === index && (
-        <Box sx={{ p: 3 }}>
-          <p>{children}</p>
-        </Box>
-      )}
-    </div>
-  );
-}
-
-CustomTabPanel.propTypes = {
-  children: PropTypes.node,
-  index: PropTypes.number.isRequired,
-  value: PropTypes.number.isRequired,
-};
-
-function a11yProps(index) {
-  return {
-    id: `simple-tab-${index}`,
-    "aria-controls": `simple-tabpanel-${index}`,
-  };
-}
 
 const Users = () => {
   const [page, setPage] = useState(1);
   const [size, setSize] = useState(10);
-  const [value, setValue] = React.useState(0);
+  const [emailSearch, setEmailSearch] = useState("");
+  const [roleTab, setRoleTab] = React.useState("");
   const currentMonth = getCurrentMonth();
 
-  const { data: allUsers = {} } = useQuery([`/api/User/GetAll`]);
-
-  console.log(allUsers);
+  const { data: allUsers = {}, isLoading: allUsersLoading } = useQuery([
+    `/api/User/GetAll?UserRole=${roleTab}&Page=${page}&PageSize=${size}&Email=${emailSearch}`,
+  ]);
 
   const [selectedOption, setSelectedOption] = useState(currentMonth);
 
   const handleChange = (event, newValue) => {
-    setValue(newValue);
+    setRoleTab(newValue);
   };
 
   return (
@@ -85,7 +51,7 @@ const Users = () => {
         <div className="">
           <div className="flex justify-between ">
             <div className="p-1 text-lg font-semibold font-sanse">
-              <CustomSearchField />
+              <CustomSearchField name={emailSearch} onChange={setEmailSearch} />
             </div>
             <div className="p-1">
               <CommonSelect
@@ -101,18 +67,18 @@ const Users = () => {
             <Box sx={{ width: "100%" }}>
               <Box sx={{ borderBottom: 1, borderColor: "divider" }}>
                 <Tabs
-                  value={value}
+                  value={roleTab}
                   onChange={handleChange}
                   aria-label="basic tabs example"
                 >
-                  <Tab label="All" {...a11yProps(0)} />
-                  <Tab label="Space Owners" {...a11yProps(1)} />
-                  <Tab label="Rental Users" {...a11yProps(2)} />
+                  <Tab label="All" value={""} />
+                  <Tab label="Space Owners" value={"SPACE_OWNER"} />
+                  <Tab label="Rental Users" value={"RENTER"} />
                 </Tabs>
               </Box>
-              <CustomTabPanel value={value} index={0}>
+              <Box sx={{ p: 3 }}>
                 <DefaultTable
-                  isLoading={false}
+                  isLoading={allUsersLoading}
                   headings={userHeading}
                   data={allUsers?.data || []}
                   disablePagination={false}
@@ -121,31 +87,7 @@ const Users = () => {
                   page={page}
                   setPage={setPage}
                 />
-              </CustomTabPanel>
-              <CustomTabPanel value={value} index={1}>
-                <DefaultTable
-                  isLoading={false}
-                  headings={userHeading}
-                  data={userData?.spaceOwners}
-                  disablePagination={false}
-                  size={size}
-                  setSize={setSize}
-                  page={page}
-                  setPage={setPage}
-                />
-              </CustomTabPanel>
-              <CustomTabPanel value={value} index={2}>
-                <DefaultTable
-                  isLoading={false}
-                  headings={userHeading}
-                  data={userData?.rentalUsers}
-                  disablePagination={false}
-                  size={size}
-                  setSize={setSize}
-                  page={page}
-                  setPage={setPage}
-                />
-              </CustomTabPanel>
+              </Box>
             </Box>
           </div>
         </div>

@@ -1,16 +1,17 @@
-import React, { Fragment } from "react";
 import {
+  Paper,
+  Skeleton,
   Table,
   TableBody,
   TableCell,
   TableContainer,
   TableHead,
   TableRow,
-  Paper,
 } from "@mui/material";
 import Pagination from "@mui/material/Pagination";
-import CommonTooltip from "./CommonTooltip";
+import React, { Fragment } from "react";
 import CommonSelect from "../ui/CommonSelect";
+import CommonTooltip from "./CommonTooltip";
 
 const DefaultTable = ({
   headings,
@@ -31,7 +32,7 @@ const DefaultTable = ({
     { label: "50", value: 50 },
     { label: "100", value: 100 },
   ];
-  console.log("data", data);
+
   return (
     <Fragment>
       <TableContainer
@@ -44,7 +45,6 @@ const DefaultTable = ({
         }}
       >
         <Table
-         
           className="primary-table-bordered table-bordered table-hover"
           sx={{ borderRadius: "20px" }}
         >
@@ -72,16 +72,9 @@ const DefaultTable = ({
             <TableBody>
               {Array.from(Array(10)).map((_, index) => (
                 <TableRow key={index}>
-                  {columns.map((column, colIndex) => (
+                  {headings.map((column, colIndex) => (
                     <TableCell key={colIndex}>
                       <Skeleton />
-                    </TableCell>
-                  ))}
-                  {actionIcons.map((icon, iconIndex) => (
-                    <TableCell key={iconIndex}>
-                      <IconButton>
-                        <Skeleton variant="circle" width={40} height={40} />
-                      </IconButton>
                     </TableCell>
                   ))}
                 </TableRow>
@@ -122,7 +115,6 @@ const DefaultTable = ({
                                 }}
                                 className={`p-1 rounded-md shadow-lg hover:shadow-xl hover:shadow-gray-400 ${action.bgColor} 
                                ${action.hoverColor}`}
-                                
                               >
                                 {action?.icon}
                               </button>
@@ -138,32 +130,28 @@ const DefaultTable = ({
             </TableBody>
           )}
         </Table>
-      
-
-    
       </TableContainer>
       {(data?.data?.length > 0 || data?.length > 0) && !disablePagination && (
         <div className="bg-white flex w-full justify-between px-4 py-4 ">
-        
-            <CommonSelect
-              label="Page"
-              id="page-select-id"
-              labelId="page-select"
-              options={pages}
-              value={size}
-              onChange={(e) => {
-                setSize(e.target.value);
-                setPage(1);
-              }}
-            />
-       
-          <div className="flex justify-center items-center">
-          <Pagination
-            count={data?.totalPages}
-            page={page}
-            onChange={(event, value) => setPage(value)}
-            className="bg-[#cff6cc] p-2 rounded-lg "
+          <CommonSelect
+            label="Page"
+            id="page-select-id"
+            labelId="page-select"
+            options={pages}
+            value={size}
+            setSelect={(value) => {
+              setSize(value);
+              setPage(1);
+            }}
           />
+
+          <div className="flex justify-center items-center">
+            <Pagination
+              count={data?.totalPages}
+              page={page}
+              onChange={(event, value) => setPage(value)}
+              className="bg-[#cff6cc] p-2 rounded-lg "
+            />
           </div>
         </div>
       )}
