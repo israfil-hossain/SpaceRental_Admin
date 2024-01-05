@@ -23,10 +23,10 @@ const formatDateString = (date) => {
 export const convertToTitleCase = (str = "") => {
   if (typeof str !== "string") return str;
 
-  return str.replace(
-    /_([a-zA-Z])/g,
-    (match, group) => ` ${group.toUpperCase()}`
-  );
+  return str
+    .toLowerCase()
+    .replace(/(?:^|_)([a-z])/g, (_, group) => ` ${group.toUpperCase()}`)
+    .replace(/_/g, " ");
 };
 
 export { formatDateString, getCurrentMonth, isLargeScreen };
