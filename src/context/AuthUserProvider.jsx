@@ -19,7 +19,7 @@ const AuthUserProvider = ({ children }) => {
     // states
     userData,
     userLoading,
-    userFound: Boolean(!userLoading && !!userData?.id),
+    userFound: Boolean(!userLoading && !!userData?.email),
     // methods
     userRefetch,
   };
