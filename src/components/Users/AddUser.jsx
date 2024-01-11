@@ -31,7 +31,6 @@ const style = {
 const AddUser = ({ open, onClose, data, fetchData }) => {
   const handleResetAndClose = (resetForm) => {
     onClose();
-    fetchData();
     resetForm();
   };
   const [showPassword, setShowPassword] = useState(false);
@@ -124,9 +123,9 @@ const AddUser = ({ open, onClose, data, fetchData }) => {
             <div>
               <Formik
                 initialValues={{
-                  name: data ? data?.name : "",
+                  fullName: data ? data?.fullName : "",
                   email: data ? data?.email : "",
-                  mobile: data ? data?.mobile : "",
+                  phoneNumber: data ? data?.phoneNumber : "",
                 }}
                 validationSchema={signupValidationSchema}
                 onSubmit={data ? handleUpdate : handleSubmit}

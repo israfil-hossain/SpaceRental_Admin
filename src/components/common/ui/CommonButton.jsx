@@ -2,10 +2,11 @@ import React from "react";
 import Button from "@mui/material/Button";
 
 function CommonButton(props) {
-  const { className, icon, text,color } = props;
+  const { className, icon, text, color, type } = props;
 
   return (
     <button
+      type={type}
       className={`${className} rounded-lg hover:bg-[#ffffff]  text-gray-800 lg:font-bold xs:font-normal py-2 lg:px-4 xs:px-2 inline-flex items-center space-x-2`}
     >
       {icon ? icon : ""}
