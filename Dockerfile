@@ -12,6 +12,6 @@ RUN npm run build
 FROM base as runner
 WORKDIR /app
 RUN npm install -g serve
-COPY --from=builder /app/build /app/build
+COPY --from=builder /app/dist /app
 EXPOSE 3000
-CMD ["serve", "-s", "build", "-p", "3000"]
+CMD ["serve", "-s", "-p", "3000"]
