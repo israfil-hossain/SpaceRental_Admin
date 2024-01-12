@@ -1,8 +1,9 @@
 import React from "react";
 import { profile } from "../../assets";
-import CommonInputText from "../ui/CommonInputText";
+
 import { IoSend } from "react-icons/io5";
-import CommonButton from "../ui/CommonButton";
+import { CommonInputText } from "../common/ui";
+
 
 const Chat = () => {
   return (

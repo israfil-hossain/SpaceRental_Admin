@@ -12,10 +12,11 @@ import Tabs from "@mui/material/Tabs";
 import { useQuery } from "@tanstack/react-query";
 import DefaultTable from "../components/common/DefaultTable";
 import CustomSearchField from "../components/common/SearchField";
-import CommonSelect from "../components/ui/CommonSelect";
+
 import { months } from "../constants/Data/constantsData";
 import { userHeading } from "../constants/TableColumns/userHeadings";
 import { getCurrentMonth } from "../utils/CommonFunction";
+import { CommonSelect } from "../components/common/ui";
 
 const Users = () => {
   const [page, setPage] = useState(1);

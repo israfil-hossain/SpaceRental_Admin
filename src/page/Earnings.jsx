@@ -11,7 +11,7 @@ import { MdOutlinePayments } from "react-icons/md";
 import IncomeAreaChart from "../components/Dashboard/IncomeAreaChart";
 import DefaultTable from "../components/common/DefaultTable";
 import PackageBreadcrumb from "../components/common/PackageBreadcrumb";
-import CommonSelect from "../components/ui/CommonSelect";
+
 import userData from "../constants/Data/dashboardData";
 
 import {
@@ -20,10 +20,11 @@ import {
   redMoney,
   yellowMoney,
 } from "../assets/images/icons";
-import CommonButton from "../components/ui/CommonButton";
+
 import { earnings, months } from "../constants/Data/constantsData";
 import { userHeading } from "../constants/TableColumns/userHeadings";
 import { getCurrentMonth } from "../utils/CommonFunction";
+import { CommonSelect,CommonButton } from "../components/common/ui";
 
 const Earnings = () => {
   const currentMonth = getCurrentMonth();

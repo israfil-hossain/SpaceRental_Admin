@@ -2,39 +2,113 @@
 import { Box, Breadcrumbs } from "@mui/material";
 import React, { Fragment, useState } from "react";
 import { Link } from "react-router-dom";
+import { useQuery } from "@tanstack/react-query";
+import { toast } from "react-toastify";
+
 //icons
+import { AiOutlineControl } from "react-icons/ai";
+import { MdAdd, MdDelete, MdModeEditOutline } from "react-icons/md";
 
 //Internal Imports
-import { AiOutlineControl } from "react-icons/ai";
 import DefaultTable from "../components/common/DefaultTable";
 import PackageBreadcrumb from "../components/common/PackageBreadcrumb";
-import CommonButton from "../components/ui/CommonButton";
-import CommonInputText from "../components/ui/CommonInputText";
-import CommonSelect from "../components/ui/CommonSelect";
-import conditionActions from "../constants/Actions/ConditionActions";
 import permissionActions from "../constants/Actions/PermissionsActions";
 import {
   Status,
   commisionPercent,
   commisions,
 } from "../constants/Data/constantsData";
-import controlData from "../constants/Data/controlData";
 import userData from "../constants/Data/dashboardData";
+
+//Headings ...
 import {
   conditionHeadings,
   permissionHeadings,
 } from "../constants/TableColumns/headings";
 import { isLargeScreen } from "../utils/CommonFunction";
 
+//ui imports
+import { CommonButton, CommonSelect } from "../components/common/ui";
+
+//hooks and API endpoints
+import { API } from "../api/endpoints";
+import useDelete from "../hooks/useDelete";
+import { deleteConfirmation } from "../components/common/Toast/DeleteConfirmation";
+import AddCondition from "../components/ControlPanel/AddCondition";
+
 const ControlPanel = () => {
   const [commisionspace, setCommisionSpace] = useState("space-owner");
   const [parcentspace, setCommisionPercent] = useState(1);
   const [commisionrenter, setCommisionRenter] = useState("rental-owner");
   const [parcentrenter, setCommisionPercentRent] = useState(1);
-  const [status, setStatus] = useState(true);
   const [page, setPage] = useState(1);
   const [size, setSize] = useState(10);
-  const isLarge = isLargeScreen();
+  const [conditionData, setConditionData] = useState("");
+  const [open, setOpen] = useState(false);
+
+  const handleOpen = () => {
+    setOpen(true); 
+  };
+  const handleClose = () => {
+    setConditionData(""); 
+    setOpen(false)
+  };
+
+  const PermissionDeleteEndpoint = API.DeleteStorageCondition;
+
+  // get Permission Data ....
+  const {
+    data: getPermissions = {},
+    isLoading: PermissionLoading,
+    refetch,
+  } = useQuery([API.GetStorageCondition]);
+
+
+  // Delte Mutation ....
+  const deleteMutation = useDelete({
+    endpoint: PermissionDeleteEndpoint, // Replace with your actual API endpoint
+    onSuccess: () => {
+      console.log("Delete successful!");
+      toast.success("Delete successful! !");
+      refetch();
+    },
+    onError: (error) => {
+      console.error("Error deleting entry:", error);
+      // Add any other error handling logic
+    },
+  });
+
+  const handleEdit = (item) => {
+    setConditionData(item);
+    handleOpen();
+  };
+
+  const handleDelete = (item) => {
+    if (item?._id) {
+      deleteConfirmation().then((result) => {
+        if (result.isConfirmed) {
+          deleteMutation.mutate(item?._id);
+        }
+      });
+    }
+  };
+
+  const conditionActions = [
+    {
+      icon: <MdModeEditOutline color="white" size={16} />,
+      tooltip: "Edit",
+      handler: handleEdit,
+      bgColor: "bg-blue-500",
+      hoverColor: "hover:bg-blue-700",
+    },
+    {
+      icon: <MdDelete color="white" size={16} />,
+      tooltip: "Delete",
+      handler: handleDelete,
+      bgColor: "bg-red-500",
+      hoverColor: "hover:bg-red-700",
+    },
+  ];
 
   return (
     <Fragment>
@@ -65,10 +139,12 @@ const ControlPanel = () => {
                   </p>
                   <div className="flex space-x-2">
                     <CommonButton
+                      type="reset"
                       text={"Reset"}
                       className="bg-[#E7E9E2] hover:bg-[#eaf9c4]"
                     />
                     <CommonButton
+                      type="submit"
                       text={"Save Changes"}
                       className="bg-primary hover:bg-secondary"
                     />
@@ -150,12 +226,18 @@ const ControlPanel = () => {
                   <p className="lg:text-lg md:text-md xs:text-sm font-semibold ">
                     Condition for renter and space owner
                   </p>
+                  <CommonButton
+                    text="Add"
+                    className="bg-primary hover:bg-secondary text-gray-200"
+                    icon={<MdAdd />}
+                    onClick={handleOpen}
+                  />
                 </div>
                 <div className="mt-4 pb-3 ">
                   <DefaultTable
-                    isLoading={false}
+                    isLoading={PermissionLoading}
                     headings={conditionHeadings}
-                    data={controlData}
+                    data={getPermissions?.data}
                     disablePagination={true}
                     size={size}
                     setSize={setSize}
@@ -166,55 +248,12 @@ const ControlPanel = () => {
                 </div>
               </div>
 
-              {/* Add New Condition  */}
-              <div className="border border-primary rounded-lg p-5 bg-white mt-5">
-                <div className="flex justify-between ">
-                  <p className="lg:text-lg md:text-md xs:text-sm font-semibold ">
-                    Add new condition
-                  </p>
-                </div>
-                <div className="mt-4 pb-3 ">
-                  <CommonInputText
-                    label={"Condition Name"}
-                    placeholder={"Type here"}
-                    className="lg:w-[400px] md:w-[350px] xs:w-full "
-                  />
-
-                  <CommonInputText
-                    label={"Checkbox text"}
-                    placeholder={"Type here"}
-                    className="lg:w-[400px] md:w-[350px] xs:w-full "
-                  />
-                  <CommonInputText
-                    textformat="rich"
-                    label={"Content"}
-                    placeholder={"Type here"}
-                    className="lg:w-[400px] md:w-[350px] xs:w-full "
-                  />
-                  <CommonSelect
-                    width={isLarge ? 400 : 330}
-                    label="Status"
-                    labelId={"status-label"}
-                    id={"status-label-id"}
-                    options={Status}
-                    value={status}
-                    setSelect={setStatus}
-                  />
-                </div>
-                <div className="flex justify-end space-x-2 mt-5">
-                  <CommonButton
-                    text={"Reset"}
-                    className="bg-[#E7E9E2] hover:bg-[#eaf9c4]"
-                  />
-                  <CommonButton
-                    text={"Save Changes"}
-                    className="bg-primary hover:bg-secondary"
-                  />
-                </div>
-              </div>
+             
             </div>
           </div>
         </div>
+         {/* Add New Condition  */}
+         <AddCondition open={open} onClose={handleClose} refetch={refetch} data={conditionData} />
       </div>
     </Fragment>
   );

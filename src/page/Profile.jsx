@@ -18,6 +18,9 @@ import { useAuthUserContext } from "../context/AuthUserProvider";
 
 // Validation Import
 import { passwordValidation } from "../validations";
+import { API } from "../api/endpoints";
+import { Progress } from "../components/common/Progress";
+import useCreate from "../hooks/useCreate";
 
 const Profile = () => {
   const { userData } = useAuthUserContext();
@@ -31,7 +34,20 @@ const Profile = () => {
   const [showNewPassword, setShowNewPassword] = useState(false);
   const [showRetypePassword, setShowRetypePassword] = useState(false);
 
-  const [isLoading, setIsLoading] = useState(false);
+ 
+
+  const updateMutation = useCreate({
+    endpoint: API.ChangePassword, // Replace with your actual API endpoint
+    onSuccess: (data) => {
+      toast.success("Password Changed Successfully !");
+    },
+    onError: (error) => {
+      // Handle update error, e.g., display an error message
+      console.error("Update failed", error);
+      toast.error("Something went wrong !");
+    },
+  });
+  const { isLoading, error, } = updateMutation;
 
   const togglePasswordVisibility = (field) => {
     switch (field) {
@@ -64,10 +80,10 @@ const Profile = () => {
         </PackageBreadcrumb>
 
         <div className="mt-10">
-          <div className="lg:flex  justify-around  space-x-5 rounded-md px-4 py-4 w-full ">
+          <div className="lg:flex  justify-around  lg:space-x-4 lg:space-y-0 space-y-5 rounded-md px-4 py-4 w-full ">
             <ProfileSection userData={userData} handleOpen={handleOpen} />
 
-            <div className="lg:w-1/2 rounded-xl px-4 py-4 bg-white">
+            <div className="lg:w-1/2  rounded-xl px-4 w-full  py-4 bg-white">
               <div>
                 <Formik
                   initialValues={{
@@ -76,7 +92,22 @@ const Profile = () => {
                     retypePassword: "",
                   }}
                   validationSchema={passwordValidation}
-                  // onSubmit={data ? handleUpdate : handleSubmit}
+                  onSubmit={async (values, { setSubmitting, resetForm }) => {
+                    try {
+                      await updateMutation.mutate(values);
+                
+                      // Only resetForm and setSubmitting if the mutation was successful
+                      if (updateMutation.isSuccess) {
+                        resetForm();
+                        setSubmitting(false);
+                        console.log("reset Form")
+                      }
+                    } catch (error) {
+                      // Handle any errors during the mutation
+                      console.error('Error during mutation:', error);
+                    }
+                
+                  }}
                 >
                   {({
                     values,
@@ -87,7 +118,7 @@ const Profile = () => {
                     resetForm,
                   }) => (
                     <Form>
-                      <>{JSON.stringify(values)}</>
+                      {/* <>{JSON.stringify(values)}</> */}
                       <Box
                         sx={{
                           pb: 0,
@@ -242,7 +273,7 @@ const Profile = () => {
                           className="border border-primary hover:bg-gray-100 w-40 flex justify-center items-center"
                           onClick={() => resetForm()}
                         />
-                         
+
                         <button
                           type="submit"
                           disabled={isSubmitting}
@@ -301,7 +332,7 @@ const ProfileSection = ({ handleOpen, userData }) => {
     }
   };
   return (
-    <div className="lg:w-1/2 rounded-xl px-4 py-4 bg-white">
+    <div className="lg:w-1/2 rounded-xl px-6 py-4 bg-white">
       <div className="w-full">
         <MdEdit
           className="cursor-pointer w-10 h-10 rounded-full bg-primary hover:bg-[#bbbd53] px-2 py-2 text-white mr-2 float-right"

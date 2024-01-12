@@ -11,13 +11,14 @@ import IncomeAreaChart from "../components/Dashboard/IncomeAreaChart";
 import PackageBreadcrumb from "../components/common/PackageBreadcrumb";
 
 import DefaultTable from "../components/common/DefaultTable";
-import CommonSelect from "../components/ui/CommonSelect";
+
 import userData from "../constants/Data/dashboardData";
 
 import StoreCard from "../components/common/StoreCard";
 import { earnings, months } from "../constants/Data/constantsData";
 import { topUserHeader } from "../constants/TableColumns/headings";
 import { getCurrentMonth } from "../utils/CommonFunction";
+import { CommonSelect } from "../components/common/ui";
 
 const Dashboard = () => {
   const currentMonth = getCurrentMonth();

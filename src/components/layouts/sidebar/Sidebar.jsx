@@ -27,7 +27,7 @@ const Sidebar = () => {
   const { userData } = useAuthUserContext();
   const queryClient = useQueryClient();
 
-  console.log("UserData : ", userData); 
+  // console.log("UserData : ", userData); 
 
   useEffect(() => {
     if (isTabletMid) {
