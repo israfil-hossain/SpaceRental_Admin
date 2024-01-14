@@ -41,7 +41,7 @@ const permissionHeadings = [
     className: "custom-class",
     render: (value, item) => (
       <div className="flex space-x-2">
-        {console.log(item)}
+        
         <img
           src={item.image}
           alt="User"
@@ -56,13 +56,13 @@ const permissionHeadings = [
 const conditionHeadings = [
   {
     label: "Condition NAME",
-    key: "condition",
+    key: "name",
     className: "custom-class",
     
   },
   {
     label: "STATUS",
-    key: "status",
+    key: "isActive",
     className: "custom-class",
     render: (value) => (
       

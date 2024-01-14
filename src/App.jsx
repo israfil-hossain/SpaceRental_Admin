@@ -8,6 +8,7 @@ import AppOutlet from "./outlets/AppOutlet";
 import AuthorizedOutlet from "./outlets/AuthorizedOutlet";
 import UnauthorizedOutlet from "./outlets/UnauthorizedOutlet";
 
+
 const Users = lazy(() => import("./page/Users"));
 const Profile = lazy(() => import("./page/Profile"));
 const Dashboard = lazy(() => import("./page/Dashboard"));
@@ -18,6 +19,7 @@ const Signin = lazy(() => import("./page/Signin"));
 const Stores = lazy(() => import("./page/Stores"));
 const Earnings = lazy(() => import("./page/Earnings"));
 const ControlPanel = lazy(() => import("./page/ControlPanel"));
+const Transport = lazy(() => import("./page/Transport"));
 
 
 const App = () => {
@@ -74,6 +76,10 @@ const App = () => {
             {
               path: "support",
               element: <Support />,
+            },
+            {
+              path: "transport",
+              element: <Transport />,
             },
             {
               path: "*",

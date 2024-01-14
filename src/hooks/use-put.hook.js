@@ -1,7 +1,7 @@
 // hook/usePut.js
 import { useMutation } from '@tanstack/react-query';
 
-import { API } from '../config/axiosConfig';
+
 import { notifyError } from '../components/common/Toast/Toaster';
 
 

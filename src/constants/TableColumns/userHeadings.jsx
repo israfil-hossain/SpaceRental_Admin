@@ -1,21 +1,29 @@
 import { CiMail, CiPhone } from "react-icons/ci";
-import { calender } from "../../assets/images/icons";
+import { calender, profile } from "../../assets/images/icons";
 import {
   convertToTitleCase,
   formatDateString,
 } from "../../utils/CommonFunction";
+import { FaUser } from "react-icons/fa";
 
 const userHeading = [
   {
     label: "NAME",
     key: "fullName",
     render: (value, item) => (
-      <div className="flex space-x-2 xs:w-40">
-        <img
-          src={item.image}
-          alt="User"
-          style={{ width: 30, height: 30, borderRadius: "50%" }}
-        />
+      <div className="flex space-x-2 xs:w-40  items-center">
+        {item?.profile ? (
+          <img
+            src={item?.profile}
+            alt="User"
+            style={{ width: 30, height: 30, borderRadius: "50%" }}
+          />
+        ) : (
+          <div className="bg-gray-200 rounded-full flex justify-center items-center p-2">
+            <FaUser size={14} />
+          </div>
+        )}
+
         <p>{value}</p>
       </div>
     ),
