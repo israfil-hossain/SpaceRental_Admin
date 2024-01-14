@@ -41,13 +41,13 @@ const AddSchedule = ({ data, refetch, open, onClose }) => {
   };
   const initialValues = {
     schedule: [
-      { day: "Saturday", startTime: "", endTime: "", selected: false },
-      { day: "Sunday", startTime: "", endTime: "", selected: false },
-      { day: "Monday", startTime: "", endTime: "", selected: false },
-      { day: "Tuesday", startTime: "", endTime: "", selected: false },
-      { day: "Wednesday", startTime: "", endTime: "", selected: false },
-      { day: "Thursday", startTime: "", endTime: "", selected: false },
-      { day: "Friday", startTime: "", endTime: "", selected: false },
+      { day: "Saturday", startTime: "", endTime: "", isActive: false },
+      { day: "Sunday", startTime: "", endTime: "", isActive: false },
+      { day: "Monday", startTime: "", endTime: "", isActive: false },
+      { day: "Tuesday", startTime: "", endTime: "", isActive: false },
+      { day: "Wednesday", startTime: "", endTime: "", isActive: false },
+      { day: "Thursday", startTime: "", endTime: "", isActive: false },
+      { day: "Friday", startTime: "", endTime: "", isActive: false },
     ],
   };
 
@@ -113,7 +113,7 @@ const AddSchedule = ({ data, refetch, open, onClose }) => {
             <div>
               <Formik
                 initialValues={initialValues}
-                validationSchema={scheduleValidationSchema}
+                // validationSchema={scheduleValidationSchema}
                 onSubmit={handleSubmit}
             
               >
@@ -176,14 +176,14 @@ const AddSchedule = ({ data, refetch, open, onClose }) => {
                                   <label className="flex items-center ">
                                     <Field
                                       type="checkbox"
-                                      name={`schedule.${index}.selected`}
+                                      name={`schedule.${index}.isActive`}
                                       className="w-4 h-4 mx-3 "
                                     />
                                     <span className="">{day?.day}</span>
                                   </label>
                                 </div>
                                 <div>
-                                  {day.selected && (
+                                  {day.isActive && (
                                     <div className="flex flex-row justify-between space-x-4">
                                       <div clasName="flex flex-col ">
                                         <div className="text-sm text-gray-700 mb-2">

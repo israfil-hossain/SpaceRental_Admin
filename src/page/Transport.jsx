@@ -18,6 +18,8 @@ import { CommonSelect, CommonButton } from "../components/common/ui";
 import { FaCartArrowDown, FaLuggageCart } from "react-icons/fa";
 import { FaCalendarDays } from "react-icons/fa6";
 import AddSchedule from "../components/Transport/AddSchedule";
+import { transportHeading } from "../constants/TableColumns/transportHeadings";
+import transportData from "../constants/Data/transportData";
 
 const Transport = () => {
   const currentMonth = getCurrentMonth();
@@ -104,8 +106,8 @@ const Transport = () => {
             <div className="border-primary border">
               <DefaultTable
                 isLoading={false}
-                headings={userHeading}
-                data={userData?.spaceOwners}
+                headings={transportHeading}
+                data={transportData}
                 disablePagination={false}
                 size={size}
                 setSize={setSize}
