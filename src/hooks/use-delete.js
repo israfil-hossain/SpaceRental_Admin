@@ -1,16 +1,12 @@
 // hook/usePut.js
 import { useMutation } from "@tanstack/react-query";
-import { useState } from 'react';
-
-import { API } from "../config/axiosConfig";
 import { notifyError } from "../components/common/Toast/Toaster";
 
 
-
-const useDelete = (apiEndpoint, onSuccessCallback, onErrorCallback) => {
+const useDeleteHook = (apiEndpoint, onSuccessCallback, onErrorCallback) => {
 
   const { mutate, isLoading } = useMutation(
-    (id) => API.delete(`${apiEndpoint}/${id}`),
+    (id) => adminAPI.delete(`${apiEndpoint}/${id}`),
 
     {
       onSuccess: (response) => {
@@ -29,4 +25,4 @@ const useDelete = (apiEndpoint, onSuccessCallback, onErrorCallback) => {
   };
 };
 
-export default useDelete;
+export default useDeleteHook;

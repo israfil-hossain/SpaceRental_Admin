@@ -10,8 +10,10 @@ import {
 } from "@mui/material";
 import Pagination from "@mui/material/Pagination";
 import React, { Fragment } from "react";
-import CommonSelect from "../ui/CommonSelect";
+
 import CommonTooltip from "./CommonTooltip";
+import { CommonSelect } from "./ui";
+import { nodata } from "../../assets";
 
 const DefaultTable = ({
   headings,
@@ -25,6 +27,7 @@ const DefaultTable = ({
   disablePagination,
   children,
   actionLabel,
+  // scrollToTopOnAction,
 }) => {
   const pages = [
     { label: "10", value: 10 },
@@ -32,6 +35,7 @@ const DefaultTable = ({
     { label: "50", value: 50 },
     { label: "100", value: 100 },
   ];
+ 
 
   return (
     <Fragment>
@@ -86,9 +90,12 @@ const DefaultTable = ({
                 <TableRow>
                   <TableCell
                     colSpan={headings?.length + 1}
-                    className="text-center text-danger"
+                    className="w-full flex justify-center items-center  "
                   >
-                    No data found
+                    <div className="w-full  rounded-lg h-40 flex flex-col justify-center items-center ">
+                      <img src={nodata} alt="nodata" className="w-16 h-16" />
+                      <p className="text-sm py-2 font-normal">No Data Found !</p>
+                    </div>
                   </TableCell>
                 </TableRow>
               ) : (
@@ -111,7 +118,7 @@ const DefaultTable = ({
                                 key={index}
                                 onClick={() => {
                                   action.handler(item);
-                                  scrollToTopOnAction();
+                                  // scrollToTopOnAction();
                                 }}
                                 className={`p-1 rounded-md shadow-lg hover:shadow-xl hover:shadow-gray-400 ${action.bgColor} 
                                ${action.hoverColor}`}

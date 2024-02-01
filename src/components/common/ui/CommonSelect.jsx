@@ -11,6 +11,7 @@ const CommonSelect = ({
   border,
   width,
   disabled,
+  
 }) => {
   
   const handleChange = (event) => {

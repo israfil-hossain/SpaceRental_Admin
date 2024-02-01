@@ -1,7 +1,8 @@
 import React from "react";
 import CustomSearchField from "../common/SearchField";
-import CommonButton from "../ui/CommonButton";
+
 import { profile } from "../../assets";
+import { CommonButton } from "../common/ui";
 
 const ChatList = () => {
   return (

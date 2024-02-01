@@ -9,9 +9,10 @@ import PackageBreadcrumb from "../components/common/PackageBreadcrumb";
 import { RiStore2Line } from "react-icons/ri";
 import CustomSearchField from "../components/common/SearchField";
 import StoreCard from "../components/common/StoreCard";
-import CommonSelect from "../components/ui/CommonSelect";
+
 import { months } from "../constants/Data/constantsData";
 import { getCurrentMonth } from "../utils/CommonFunction";
+import { CommonSelect } from "../components/common/ui";
 
 const Stores = () => {
   const currentMonth = getCurrentMonth();
