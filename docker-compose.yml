@@ -1,0 +1,13 @@
+version: "3.8"
+
+services:
+  space-rental-frontend:
+    build:
+      context: .
+      target: builder
+    image: space-rental:frontend
+    container_name: space-rental-frontend
+    ports:
+      - "5020:3000"
+    volumes:
+      - ./.env:/app/.env
