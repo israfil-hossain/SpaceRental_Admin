@@ -21,33 +21,35 @@ import { passwordValidation } from "../validations";
 import { API } from "../api/endpoints";
 import { Progress } from "../components/common/Progress";
 import useCreate from "../hooks/useCreate";
+import { usePatch } from "../hooks";
 
 const Profile = () => {
-  const { userData } = useAuthUserContext();
-  console.log("userData", userData);
-
+  const { userData, userRefetch } = useAuthUserContext();
   const [open, setOpen] = useState(false);
 
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
+
   const [showOldPassword, setShowOldPassword] = useState(false);
   const [showNewPassword, setShowNewPassword] = useState(false);
   const [showRetypePassword, setShowRetypePassword] = useState(false);
 
- 
-
-  const updateMutation = useCreate({
-    endpoint: API.ChangePassword, // Replace with your actual API endpoint
-    onSuccess: (data) => {
-      toast.success("Password Changed Successfully !");
-    },
-    onError: (error) => {
-      // Handle update error, e.g., display an error message
-      console.error("Update failed", error);
-      toast.error("Something went wrong !");
-    },
-  });
-  const { isLoading, error, } = updateMutation;
+  const { mutate: changePasswordMutation, isLoading: isChangingPassword } =
+    useCreate({
+      endpoint: API.ChangePassword,
+      onSuccess: ({ data }) => {
+        toast.success(`${data.message}`);
+      },
+      onError: ({ response }) => {
+        toast.error(`${response.data.message}`);
+      },
+    });
+  console.log(userData);
+  const handleSubmit = (values, { setSubmitting, resetForm }) => {
+    changePasswordMutation(values);
+    setSubmitting(false);
+    resetForm();
+  };
 
   const togglePasswordVisibility = (field) => {
     switch (field) {
@@ -81,7 +83,7 @@ const Profile = () => {
 
         <div className="mt-10">
           <div className="lg:flex  justify-around  lg:space-x-4 lg:space-y-0 space-y-5 rounded-md px-4 py-4 w-full ">
-            <ProfileSection userData={userData} handleOpen={handleOpen} />
+            <ProfileSection userData={userData} handleOpen={handleOpen} fetchData={userRefetch}/>
 
             <div className="lg:w-1/2  rounded-xl px-4 w-full  py-4 bg-white">
               <div>
@@ -90,33 +92,15 @@ const Profile = () => {
                     oldPassword: "",
                     newPassword: "",
                     retypePassword: "",
+                    email: userData?.email || "",
+                    fullName: userData?.fullName || "",
+                    address: userData?.address || "",
+                    phoneNumber: userData?.phoneNumber || "",
                   }}
                   validationSchema={passwordValidation}
-                  onSubmit={async (values, { setSubmitting, resetForm }) => {
-                    try {
-                      await updateMutation.mutate(values);
-                
-                      // Only resetForm and setSubmitting if the mutation was successful
-                      if (updateMutation.isSuccess) {
-                        resetForm();
-                        setSubmitting(false);
-                        console.log("reset Form")
-                      }
-                    } catch (error) {
-                      // Handle any errors during the mutation
-                      console.error('Error during mutation:', error);
-                    }
-                
-                  }}
+                  onSubmit={handleSubmit}
                 >
-                  {({
-                    values,
-                    handleChange,
-                    errors,
-                    touched,
-                    isSubmitting,
-                    resetForm,
-                  }) => (
+                  {({ values, handleChange, errors, touched, resetForm }) => (
                     <Form>
                       {/* <>{JSON.stringify(values)}</> */}
                       <Box
@@ -276,11 +260,11 @@ const Profile = () => {
 
                         <button
                           type="submit"
-                          disabled={isSubmitting}
+                          disabled={isChangingPassword}
                           className="group relative w-80 flex justify-center py-3 px-4 border border-transparent text-sm font-medium rounded-md text-white bg-primary hover:bg-[#cacc57] focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-500"
                         >
                           <span className="absolute left-0 inset-y-0 flex items-center pl-3">
-                            {isLoading ? (
+                            {isChangingPassword ? (
                               <Progress />
                             ) : (
                               <BiLockAlt
@@ -303,7 +287,7 @@ const Profile = () => {
             data={userData}
             open={open}
             onClose={handleClose}
-            // fetchData={fetchData}
+            fetchData={userRefetch}
           />
         </div>
       </div>
@@ -311,22 +295,36 @@ const Profile = () => {
   );
 };
 
-const ProfileSection = ({ handleOpen, userData }) => {
+const ProfileSection = ({ handleOpen, userData,fetchData }) => {
   const [selectedImage, setSelectedImage] = useState(null);
+  const { mutateAsync: changeProfileMutation, isLoading: isChangingProfile } =
+    usePatch({
+      endpoint: API.UpdateProfile,
+      isMultiPart: true,
+      onSuccess: ({ data }) => {
+        toast.success("Profile Image Upload Successfully");
+        fetchData();
+      },
+      onError: ({ response }) => {
+        toast.error(`${response.data.message}`);
+      },
+    });
 
   const handleImageUpload = (event) => {
     const file = event.target.files[0];
+    console.log({file})
     setSelectedImage(URL.createObjectURL(file));
     uploadImage(file);
+    
   };
   const uploadImage = async (file) => {
     try {
       const formData = new FormData();
-      formData.append("image", file);
+      formData.append("profilePicture", file);
 
       // Replace 'PUT_API_ENDPOINT' with the actual API endpoint URL for image upload
-      await UserService.UploadImage(userData?._id, formData);
-      toast.success("Profile Image Upload Successfully");
+      await changeProfileMutation(formData);
+      
     } catch (error) {
       console.error("Error uploading image:", error);
     }
@@ -355,8 +353,8 @@ const ProfileSection = ({ handleOpen, userData }) => {
           </div>
 
           <div className="py-3 flex border bg-gray-200 rounded-lg space-x-3 px-3 font-semibold  font-sans text-lg">
-            <p>Address :</p>
-            <span className="">{userData?.address}</span>
+            <p>Phone :</p>
+            <span className="">{userData?.phoneNumber}</span>
           </div>
         </div>
 

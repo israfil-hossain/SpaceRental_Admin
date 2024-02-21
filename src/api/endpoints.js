@@ -13,7 +13,8 @@ export const API = {
   GetUser: "/User/GetAll", //get
   GetSingleUser: "/User/GetById/{DocId}", //get
   DeleteUser: "/User/DeleteById/{DocId}", // delete
-
+  UpdateUser :'/api/ApplicationUser/UpdateOwnProfile',//update profile
+  UpdateProfile :'/api/ApplicationUser/UpdateOwnProfilePicture',//update profile picture
   // Space Type
   CreateSpaceType: "/SpaceType/Create", // post
   GetSpaceType: "/SpaceType/GetAll", //get

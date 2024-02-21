@@ -15,7 +15,8 @@ import { BiLockAlt } from "react-icons/bi";
 import { toast } from "react-toastify";
 import signupValidationSchema from "../../utils/validation/signupValidation";
 import { Progress } from "../common/Progress";
-
+import { API } from "../../api/endpoints";
+import usePatch from "../../hooks/usePatch";
 const style = {
   position: "absolute",
   top: "50%",
@@ -33,72 +34,27 @@ const AddUser = ({ open, onClose, data, fetchData }) => {
     onClose();
     resetForm();
   };
-  const [showPassword, setShowPassword] = useState(false);
-  const [isLoading, setIsLoading] = useState(false);
-  const togglePasswordVisibility = () => {
-    setShowPassword((prevState) => !prevState);
-  };
 
-  const handleSubmit = async (values, { setSubmitting, setErrors }) => {
-    try {
-      //api call
-      setIsLoading(true);
-      const response = await UserService.addUser(values);
-      if (response.status === 200) {
-        const responseData = response.data;
-        if (responseData.error) {
-          toast.error(responseData.error.message);
-          const errorData = responseData.error;
-          if (errorData.errors) {
-            const errors = Object.keys(errorData.errors).reduce((acc, key) => {
-              acc[key] = errorData.errors[key].msg;
-              return acc;
-            }, {});
-            console.log(errors);
-            setErrors(errors);
-          }
-        } else {
-          toast.success("Successfully Add User ");
-          onClose();
-          fetchData();
-          setIsLoading(false);
-        }
-        setSubmitting(false);
-      }
-    } catch (err) {
-      if (err.response) {
-        const errorData = err.response.data;
-        toast.error(errorData.message);
-        if (errorData.errors) {
-          const errors = Object.keys(errorData.errors).reduce((acc, key) => {
-            acc[key] = errorData.errors[key].msg;
-            return acc;
-          }, {});
-          console.log(errors);
-          setErrors(errors);
-        } else {
-          toast.error("Something went wrong");
-        }
-      } else {
-        toast.error("Something went wrong");
-      }
-    }
-  };
-
-  const handleUpdate = async (values, { setSubmitting, setErrors }) => {
-    try {
-      //api call
-      const response = await UserService.updateUser(data._id, values);
-      if (response.status === 200) {
-        toast.success("Successfully Update Information ");
-        setSubmitting(false);
+  const { mutateAsync: changeProfileMutation, isLoading: isChangingProfile } =
+    usePatch({
+      endpoint: API.UpdateUser,
+      onSuccess: ({ data }) => {
+        toast.success(`${data.message}`);
         onClose();
         fetchData();
-      }
+      },
+      onError: ({ response }) => {
+        toast.error(`${response.data.message}`);
+      },
+    });
+
+  const handleSubmit = async (values, { setSubmitting, resetForm }) => {
+    try {
+      setSubmitting(true);
+      await changeProfileMutation(values);
+      setSubmitting(false);
     } catch (err) {
-      toast.error("Something went wrong");
       console.log(err);
-      setErrors(err);
       setSubmitting(false);
     }
   };
@@ -128,16 +84,9 @@ const AddUser = ({ open, onClose, data, fetchData }) => {
                   phoneNumber: data ? data?.phoneNumber : "",
                 }}
                 validationSchema={signupValidationSchema}
-                onSubmit={data ? handleUpdate : handleSubmit}
+                onSubmit={handleSubmit}
               >
-                {({
-                  values,
-                  handleChange,
-                  errors,
-                  touched,
-                  isSubmitting,
-                  resetForm,
-                }) => (
+                {({ handleChange, values, errors, touched, isSubmitting }) => (
                   <Form>
                     {/* <>{JSON.stringify(values)}</> */}
                     <Box
@@ -163,6 +112,7 @@ const AddUser = ({ open, onClose, data, fetchData }) => {
                               width: "22px",
                             }}
                             className="text-red-400 hover:text-600"
+                            onClick={() => handleResetAndClose()}
                           />
                         </IconButton>
                       </div>
@@ -180,24 +130,24 @@ const AddUser = ({ open, onClose, data, fetchData }) => {
                       <div className="mt-1 ">
                         <Field
                           type="text"
-                          name="name"
-                          id="name"
-                          autoComplete="name"
-                          value={values.name}
+                          name="fullName"
+                          id="fullName"
+                          autoComplete="fullName"
+                          value={values.fullName}
                           placeholder="Enter your Name"
                           onChange={handleChange}
-                          error={touched.name && errors.name}
+                          error={touched.fullName && errors.fullName}
                           className={`appearance-none block w-full px-3 py-2 border border-gray-300 
                                     rounded-md shadow-sm placeholder-gray-400 
                                     focus:ring-green-500 focus:border-green-500 focus:ring-1 sm:text-sm ${
-                                      touched.name && errors.name
+                                      touched.fullName && errors.fullName
                                         ? "border-red-500"
                                         : ""
                                     }`}
                         />
-                        {touched.name && errors.name && (
+                        {touched.fullName && errors.fullName && (
                           <p className="mt-2 text-sm text-red-600 ">
-                            {errors.name}
+                            {errors.fullName}
                           </p>
                         )}
                       </div>
@@ -236,7 +186,7 @@ const AddUser = ({ open, onClose, data, fetchData }) => {
                     </div>
                     <div className="mt-3">
                       <label
-                        htmlFor="mobile"
+                        htmlFor="phoneNumber"
                         className="block text-sm font-medium text-gray-700"
                       >
                         Mobile
@@ -244,24 +194,24 @@ const AddUser = ({ open, onClose, data, fetchData }) => {
                       <div className="mt-1">
                         <Field
                           type="mobile"
-                          name="mobile"
-                          id="mobile"
-                          autoComplete="mobile"
-                          value={values.mobile}
+                          name="phoneNumber"
+                          id="phoneNumber"
+                          autoComplete="phoneNumber"
+                          value={values.phoneNumber}
                           placeholder="Enter your Mobile Number"
                           onChange={handleChange}
-                          error={touched.mobile && errors.mobile}
+                          error={touched.phoneNumber && errors.phoneNumber}
                           className={`appearance-none block w-full px-3 py-2 border border-gray-300 
                                     rounded-md shadow-sm placeholder-gray-400 
                                     focus:ring-green-500 focus:border-green-500 focus:ring-1 sm:text-sm ${
-                                      touched.mobile && errors.mobile
+                                      touched.phoneNumber && errors.phoneNumber
                                         ? "border-red-500"
                                         : ""
                                     }`}
                         />
-                        {touched.mobile && errors.mobile && (
+                        {touched.phoneNumber && errors.phoneNumber && (
                           <p className="mt-2 text-sm text-red-600 ">
-                            {errors.mobile}
+                            {errors.phoneNumber}
                           </p>
                         )}
                       </div>
@@ -271,9 +221,10 @@ const AddUser = ({ open, onClose, data, fetchData }) => {
                         type="submit"
                         disabled={isSubmitting}
                         className="group relative w-full flex justify-center py-2 px-4 border border-transparent text-sm font-medium rounded-md text-white bg-gray-700 hover:bg-gray-900 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-yellow-500"
+                        // onClick={() => handleUpdate()}
                       >
                         <span className="absolute left-0 inset-y-0 flex items-center pl-3">
-                          {isLoading ? (
+                          {isChangingProfile ? (
                             <Progress />
                           ) : (
                             <BiLockAlt
