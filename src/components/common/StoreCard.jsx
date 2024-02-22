@@ -6,15 +6,15 @@ import { profile } from "../../assets";
 
 const StoreCard = ({ data }) => {
   return (
-    <div className="w-[400px] h-[320px] relative ">
-      <div className="w-[400px] h-[320px]  left-0 top-0 absolute items-center justify-center flex bg-white rounded-3xl shadow border border-yellow-400">
+    <div className="min-w-[350px] max-w-[350px] mx-auto h-[320px] relative ">
+      <div className="w-[350px] h-[320px]  left-0 top-0 absolute items-center justify-center flex bg-white rounded-3xl shadow border border-yellow-400">
         <img
           className="w-full px-3 pt-2 top-[5px] absolute rounded-3xl"
           src="https://via.placeholder.com/364x194"
         />
       </div>
 
-      <div className="w-32 h-[37px] p-2 left-[244px] top-[24px] absolute bg-white rounded-lg justify-around items-center  inline-flex">
+      <div className="w-32 h-[37px] p-2 left-[204px] top-[24px] absolute bg-white rounded-lg justify-around items-center  inline-flex">
         <div className="justify-start items-center gap-1 flex">
           <FaRegStar className="text-yellow-500" />
           <div className="text-zinc-800 text-sm font-semibold font-sanse leading-[21px]">
@@ -26,17 +26,17 @@ const StoreCard = ({ data }) => {
         </div>
       </div>
 
-      <div className="w-[292px] h-[21px] left-[16px] top-[258px] absolute justify-start items-center gap-2 inline-flex">
+      <div className="w-[292px] h-[21px] left-[12px] top-[240px] absolute justify-start items-center gap-2 inline-flex">
         <PiMapPin />
         <div className="text-gray-400 text-[12px] font-medium font-sanse leading-[18px]">
           Chodkiewicza Karola 111, Chorzów 41-506
         </div>
       </div>
-      <div className="w-[364px] h-[27px] left-[16px] top-[287px] absolute">
+      <div className="w-[350px] h-[27px] left-[16px] top-[277px] absolute ">
         <div className="left-0 top-[3px] absolute text-zinc-800 text-sm font-medium font-sanse leading-[21px]">
           Access 24/7
         </div>
-        <div className="w-[76px] h-[27px] left-[288px] top-0 absolute justify-start items-center gap-1 inline-flex">
+        <div className="w-[76px] h-[27px] left-[238px] top-0 absolute justify-start items-center gap-1 inline-flex">
           <div className="text-zinc-800 text-lg font-extrabold font-sanse leading-[27px]">
             $74
           </div>
@@ -45,16 +45,16 @@ const StoreCard = ({ data }) => {
           </div>
         </div>
       </div>
-      <div className="w-[364px] h-6 left-[16px] top-[226px] absolute">
-        <div className="w-6 h-6 left-[340px] top-0 absolute">
+      <div className="w-[350px] h-6 left-[6px] top-[200px] absolute">
+        <div className="w-7 h-7 left-[300px] top-0 absolute">
           {" "}
-          <FaHeart size={24} className="text-red-500" />
+          <FaHeart size={24} className="text-red-500 p-1" />
         </div>
-        <div className="left-0 top-0 absolute text-zinc-800 text-base font-semibold font-sanse leading-normal">
+        <div className="left-3 top-0 sm:text-sm md:text-md lg:text-[16px] absolute text-zinc-800 text-base font-semibold font-sanse leading-normal">
           Diamond field storage
         </div>
 
-        <div className="w-[58px] h-[22px] left-[266px] top-[1px] absolute">
+        <div className="w-[58px] h-[22px] left-[226px] top-[1px] absolute">
           <img
             className="w-[22px] h-[22px] left-[36px] top-0 absolute rounded-full border border-white"
             src="https://via.placeholder.com/22x22"
