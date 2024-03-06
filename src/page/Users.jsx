@@ -29,6 +29,8 @@ const Users = () => {
     `/api/ApplicationUser/GetAll?UserRole=${roleTab}&Page=${page}&PageSize=${size}&Email=${emailSearch}`,
   ]);
 
+  console.log('allUsers ==> ', allUsers)
+
   const [selectedOption, setSelectedOption] = useState(currentMonth);
 
   const handleChange = (event, newValue) => {
@@ -73,11 +75,12 @@ const Users = () => {
                   aria-label="basic tabs example"
                 >
                   <Tab label="All" value={""} />
-                  <Tab label="Space Owners" value={"SPACE_OWNER"} />
+                  <Tab label="Admin" value={"ADMIN"} />
+                  <Tab label="Space Owners" value={"OWNER"} />
                   <Tab label="Rental Users" value={"RENTER"} />
                 </Tabs>
               </Box>
-              <Box sx={{ p: 3 }}>
+              <Box sx={{ p: 0 }}>
                 <DefaultTable
                   isLoading={allUsersLoading}
                   headings={userHeading}

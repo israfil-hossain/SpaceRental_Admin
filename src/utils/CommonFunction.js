@@ -28,5 +28,12 @@ export const convertToTitleCase = (str = "") => {
     .replace(/(?:^|_)([a-z])/g, (_, group) => ` ${group.toUpperCase()}`)
     .replace(/_/g, " ");
 };
+export function spliceString(str,number) {
+  if (str?.length > number) {
+    const truncatedString = str.substring(0, number) + '...';
+    return truncatedString;
+  }
+  return str;
+}
 
 export { formatDateString, getCurrentMonth, isLargeScreen };

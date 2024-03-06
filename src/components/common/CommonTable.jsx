@@ -122,9 +122,9 @@ const CommonTable = ({
       </Table>
       {Paginate && (
         <TablePagination
-          rowsPerPageOptions={[10, 25, 100]}
+          rowsPerPageOptions={[10, 25, 100,500]}
           component="div"
-          count={data.length}
+          count={data?.length}
           rowsPerPage={rowsPerPage}
           page={page}
           onPageChange={handleChangePage}
