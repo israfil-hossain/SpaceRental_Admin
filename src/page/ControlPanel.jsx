@@ -35,6 +35,7 @@ import { API } from "../api/endpoints";
 import useDelete from "../hooks/useDelete";
 import { deleteConfirmation } from "../components/common/Toast/DeleteConfirmation";
 import AddCondition from "../components/ControlPanel/AddCondition";
+import AddSpaceType from "../components/ControlPanel/AddSpacetype";
 
 const ControlPanel = () => {
   const [commisionspace, setCommisionSpace] = useState("space-owner");
@@ -44,15 +45,38 @@ const ControlPanel = () => {
   const [page, setPage] = useState(1);
   const [size, setSize] = useState(10);
   const [conditionData, setConditionData] = useState("");
+  const [spaceTypeData, setSpaceTypeData] = useState("");
   const [open, setOpen] = useState(false);
+  const [spaceOpen, setSpaceOpen] = useState(false);
 
   const handleOpen = () => {
-    setOpen(true); 
+    setOpen(true);
   };
   const handleClose = () => {
-    setConditionData(""); 
-    setOpen(false)
+    setConditionData("");
+    setOpen(false);
   };
+  const handleSpaceOpen = () => {
+    setSpaceOpen(true);
+  };
+  const handleSpaceClose = () => {
+    setSpaceOpen(false);
+    setSpaceTypeData("");
+  };
+  const handleSpaceEdit = (item) => {
+    console.log({item});
+    setSpaceTypeData(item);
+    handleSpaceOpen();
+  };
+
+  //Space API
+  const spaceTypeAPI = API.GetSpaceType;
+  const {
+    data: allSpaceType = {},
+    isLoading: allSpaceTypeLoading,
+    refetch: spaceTypeRefatch,
+  } = useQuery([spaceTypeAPI]);
+  console.log("AllTypeSpace", allSpaceType?.data);
 
   const PermissionDeleteEndpoint = API.DeleteStorageCondition;
 
@@ -63,6 +87,11 @@ const ControlPanel = () => {
     refetch,
   } = useQuery([API.GetStorageCondition]);
 
+  const {
+    data: getConditionData = {},
+    isLoading: getConditionLoading,
+    refetch : getConditionRefatch,
+  } = useQuery([API.GetAllTermsAndCondition]);
 
   // Delte Mutation ....
   const deleteMutation = useDelete({
@@ -194,8 +223,39 @@ const ControlPanel = () => {
                 </div>
               </div>
 
-              {/* Permission Management .........*/}
+              {/* Space Type  Management .........*/}
 
+              <div className="border border-primary rounded-lg p-5 bg-white mt-5">
+                <div className="flex justify-between ">
+                  <p className="lg:text-lg md:text-md xs:text-sm font-semibold ">
+                    Spaces Types Management
+                  </p>
+                  <CommonButton
+                    text="Add"
+                    className="bg-primary hover:bg-secondary text-gray-200 self-end"
+                    icon={<MdAdd />}
+                    onClick={handleSpaceOpen}
+                  />
+                </div>
+                <div className="grid lg:grid-cols-2 md:grid-cols-2 grid-cols-1 mt-5 w-full gap-2 ">
+                  {allSpaceType?.data?.length > 0 &&
+                    allSpaceType?.data?.map((item, index) => (
+                      <div
+                        key={index}
+                        className="bg-gray-300 rounded-xl px-5 py-4 mx-2 space-x-2 gap-3 font-medium text-[16px] font-sans cursor-pointer"
+                        onClick={()=>handleSpaceEdit(item)}
+                        
+                      >
+                        <div className="flex justify-between items-center ">
+                          <p>{item.name}</p>
+                          <p>$ {item.pricePerMonth}</p>
+                        </div>
+                      </div>
+                    ))}
+                </div>
+              </div>
+
+              {/* Permission Management .........*/}
               <div className="mt-5 border border-primary rounded-lg p-5 bg-white">
                 <div className="flex justify-between ">
                   <p className="text-lg font-semibold ">
@@ -235,9 +295,9 @@ const ControlPanel = () => {
                 </div>
                 <div className="mt-4 pb-3 ">
                   <DefaultTable
-                    isLoading={PermissionLoading}
+                    isLoading={getConditionLoading}
                     headings={conditionHeadings}
-                    data={getPermissions?.data}
+                    data={getConditionData?.data}
                     disablePagination={true}
                     size={size}
                     setSize={setSize}
@@ -247,13 +307,23 @@ const ControlPanel = () => {
                   />
                 </div>
               </div>
-
-             
             </div>
           </div>
         </div>
-         {/* Add New Condition  */}
-         <AddCondition open={open} onClose={handleClose} refetch={refetch} data={conditionData} />
+        {/* Add New Condition  */}
+        <AddCondition
+          open={open}
+          onClose={handleClose}
+          refetch={getConditionRefatch}
+          data={conditionData}
+        />
+        {/* Add SpaceType */}
+        <AddSpaceType
+          open={spaceOpen}
+          onClose={handleSpaceClose}
+          refetch={spaceTypeRefatch}
+          data={spaceTypeData}
+        />
       </div>
     </Fragment>
   );

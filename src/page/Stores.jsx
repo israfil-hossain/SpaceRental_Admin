@@ -1,5 +1,5 @@
 //External Import
-import { Box, Breadcrumbs } from "@mui/material";
+import { Box, Breadcrumbs, TablePagination } from "@mui/material";
 import React, { Fragment, useState } from "react";
 import { Link } from "react-router-dom";
 
@@ -13,11 +13,29 @@ import StoreCard from "../components/common/StoreCard";
 import { months } from "../constants/Data/constantsData";
 import { getCurrentMonth } from "../utils/CommonFunction";
 import { CommonSelect } from "../components/common/ui";
+import { useQuery } from "@tanstack/react-query";
+import { API } from "../api/endpoints";
+import CommonPagination from "../components/common/CommonPagination";
+import { CommonProgress } from "../components/common/CommonProgress";
 
 const Stores = () => {
   const currentMonth = getCurrentMonth();
+  const [page, setPage] = useState(1);
+  const [size, setSize] = useState(10);
+
   const [selectedOption, setSelectedOption] = useState(currentMonth);
 
+  const storeAPI = API.GetSpaceForRent + `?Page=${page}&PageSize=${size}`;
+  const { data: allStores = {}, isLoading: allStoresLoading } = useQuery([
+    storeAPI,
+  ]);
+
+  console.log("storeAPI", allStores);
+  if(allStoresLoading){
+    return(
+      <CommonProgress/>
+    )
+  }
   return (
     <Fragment>
       <div>
@@ -46,12 +64,27 @@ const Stores = () => {
           </div>
         </div>
 
-        <div className="grid lg:grid-cols-3 gap-5 md:grid-cols-2  grid-cols-1 mt-5">
-          <StoreCard />
-          <StoreCard />
-          <StoreCard />
-          <StoreCard />
+        <div className="flex flex-wrap items-center ">
+        {
+          allStores?.data?.length > 0 && allStores?.data?.map((item,index)=>(
+            <div key={index} className="m-4">
+            <StoreCard data={item} />
+            </div>
+          ))
+        }
+          
         </div>
+
+        
+          
+          <CommonPagination
+            size={size}
+            setSize={setSize}
+            page={page}
+            setPage={setPage}
+            count={allStores?.totalRecords}
+          />
+        
       </div>
     </Fragment>
   );

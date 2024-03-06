@@ -9,7 +9,7 @@ const AuthUserProvider = ({ children }) => {
     data: { data: { data: userData = {} } = {} } = {},
     isLoading: userLoading,
     refetch: userRefetch,
-  } = useQuery(["userInfo"], () => adminAPI("/api/Auth/GetLoggedInUser"), {
+  } = useQuery(["userInfo"], () => adminAPI("/api/Authentication/GetLoggedInUser"), {
     retry: false,
     refetchOnWindowFocus: false,
     cacheTime: 0,

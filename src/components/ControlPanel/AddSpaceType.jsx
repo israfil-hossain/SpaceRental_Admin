@@ -22,6 +22,7 @@ import {
 } from "@mui/material";
 import { FaLessThanEqual } from "react-icons/fa";
 import { AiOutlineCloseCircle } from "react-icons/ai";
+import addSpaceTypeValidationSchema from "../../validations/control_validations/AddSpaceTypeValidation";
 
 const style = {
   position: "absolute",
@@ -35,31 +36,30 @@ const style = {
   boxShadow: `3px 2px 3px 1px rgba(0, 0, 0, 0.2)`,
   p: 4,
 };
-const AddCondition = ({ data, refetch, open, onClose }) => {
-  console.log("Data : ", data?.name, data?.content);
-  const [status, setStatus] = useState(data?.isActive);
+const AddSpaceType = ({ data, refetch, open, onClose }) => {
+  const [status, setStatus] = useState(data ? data?.isActive : true);
   console.log("Status : ", status);
   const isLarge = isLargeScreen();
   const [id ,setId] = useState();
 
   const { mutate: createmutate, isLoading: createLoading } = useCreate({
-    endpoint: API.CreateTermsAndCondition, // Replace with your actual API endpoint
+    endpoint: API.CreateSpaceType, // Replace with your actual API endpoint
     onSuccess: (data) => {
-      toast.success("Add Condition Successfully !");
+      toast.success("Space Created Successfully");
       refetch();
       onClose();
     },
     onError: (error) => {
       // Handle update error, e.g., display an error message
-      console.error("Submit failed", error);
+      console.error("Update failed", error);
       toast.error("Something went wrong !");
     },
   });
   const { mutate: updateMutate, isLoading: updateLoading } = usePatch({
-    endpoint: API.UpdateTermsAndCondition + id, // Replace with your actual API endpoint
+    endpoint: API.UpdateSpaceType + id, // Replace with your actual API endpoint
     onSuccess: (data) => {
-      toast.success("Update Condition Successfully !");
-      setId("");
+      toast.success("Space Update Successfully");
+      setId("")
       refetch();
       onClose();
     },
@@ -74,7 +74,7 @@ const AddCondition = ({ data, refetch, open, onClose }) => {
     try {
       let payload = { ...values, isActive: status };
       console.log("Payload", payload);
-      if (data?._id) {
+      if (data?._id ) {
         setId(data?._id)
         await updateMutate(payload);
       } else {
@@ -87,7 +87,7 @@ const AddCondition = ({ data, refetch, open, onClose }) => {
       console.log("Error during Create ", e);
     }
   };
-console.log({status})
+
   return (
     <Fragment>
       <Modal
@@ -109,10 +109,9 @@ console.log({status})
               <Formik
                 initialValues={{
                   name: data ? data?.name : "",
-                  checkboxText: data ? data?.checkboxText : "",
-                  content: data ? data?.content : "",
+                  pricePerMonth: data ? data?.pricePerMonth : "",
                 }}
-                validationSchema={addconditionValidation}
+                validationSchema={addSpaceTypeValidationSchema}
                 onSubmit={handleSubmit}
               >
                 {({
@@ -134,7 +133,7 @@ console.log({status})
                       }}
                     >
                       <Typography variant="h5" component="h5">
-                        {data ? "Update " : "Add "} Condition
+                        {data ? "Update " : "Add "} SpaceType
                       </Typography>
                       <div style={{}}>
                         <IconButton
@@ -142,7 +141,6 @@ console.log({status})
                           onClick={() => {
                             onClose();
                             resetForm();
-                            
                           }}
                         >
                           <AiOutlineCloseCircle
@@ -157,7 +155,7 @@ console.log({status})
                       </div>
                     </Box>
                     <Divider sx={{ mb: 2 }}>
-                      <Chip label="Condition" />
+                      <Chip label="SpaceType" />
                     </Divider>
 
                     <div className="mt-4 pb-3">
@@ -165,7 +163,7 @@ console.log({status})
                         <Field
                           name="name"
                           id="name"
-                          label="Condition Name"
+                          label="SpaceType Name"
                           placeholder="Type here"
                           component={CommonInputText}
                           onChange={handleChange}
@@ -184,49 +182,25 @@ console.log({status})
                       </div>
                       <div>
                         <Field
-                          name="checkboxText"
-                          id="checkboxText"
-                          label="Checkbox text"
+                          name="pricePerMonth"
+                          id="pricePerMonth"
+                          label="Price Per Month"
                           placeholder="Type here"
                           onChange={handleChange}
                           component={CommonInputText}
-                          value={values.checkboxText}
+                          value={values.pricePerMonth}
                           className={` ${
-                            touched.checkboxText && errors.checkboxText
+                            touched.pricePerMonth && errors.pricePerMonth
                               ? "border-red-500"
                               : ""
                           }`}
                         />
                         <ErrorMessage
-                          name="checkboxText"
+                          name="pricePerMonth"
                           component="div"
                           className="mt-2 text-sm text-red-600"
                         />
                       </div>
-
-                      <div>
-                        <Field
-                          name="content"
-                          id="content"
-                          label="Content"
-                          placeholder="Type here"
-                          textformat="rich"
-                          component={CommonInputText}
-                          value={values.content}
-                          onChange={handleChange}
-                          className={` ${
-                            touched.content && errors.content
-                              ? "border-red-500"
-                              : ""
-                          }`}
-                        />
-                        <ErrorMessage
-                          name="content"
-                          component="div"
-                          className="mt-2 text-sm text-red-600"
-                        />
-                      </div>
-
                       <div>
                         <Field
                           id="status-label-id"
@@ -279,7 +253,7 @@ console.log({status})
   );
 };
 
-export default AddCondition;
+export default AddSpaceType;
 
 {
   /* <Formik

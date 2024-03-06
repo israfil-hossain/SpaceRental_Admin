@@ -25,7 +25,9 @@ const Signin = () => {
   };
 
   const { mutateAsync: signInMutationAsync, isLoading: isSigninLoading } =
-    useMutation((payload) => adminAPI.post("/api/Auth/AdminSignIn", payload));
+    useMutation((payload) =>
+      adminAPI.post("/api/Authentication/AdminSignIn", payload)
+    );
 
   const handleSubmit = async (values, { setSubmitting, setErrors }) => {
     const payload = {
