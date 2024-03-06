@@ -11,6 +11,7 @@ const CommonSelect = ({
   border,
   width,
   disabled,
+  defaultValue,
   
 }) => {
   
@@ -44,6 +45,7 @@ const CommonSelect = ({
           onChange={handleChange}
           label={label}
           disabled={disabled}
+          defaultValue={value}
           sx={{
             backgroundColor: "#E7E9E2",
             borderRadius: 3,

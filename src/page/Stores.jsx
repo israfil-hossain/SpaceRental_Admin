@@ -16,6 +16,7 @@ import { CommonSelect } from "../components/common/ui";
 import { useQuery } from "@tanstack/react-query";
 import { API } from "../api/endpoints";
 import CommonPagination from "../components/common/CommonPagination";
+import { CommonProgress } from "../components/common/CommonProgress";
 
 const Stores = () => {
   const currentMonth = getCurrentMonth();
@@ -25,11 +26,16 @@ const Stores = () => {
   const [selectedOption, setSelectedOption] = useState(currentMonth);
 
   const storeAPI = API.GetSpaceForRent + `?Page=${page}&PageSize=${size}`;
-  const { data: allStores = {}, isLoading: allUsersLoading } = useQuery([
+  const { data: allStores = {}, isLoading: allStoresLoading } = useQuery([
     storeAPI,
   ]);
 
   console.log("storeAPI", allStores);
+  if(allStoresLoading){
+    return(
+      <CommonProgress/>
+    )
+  }
   return (
     <Fragment>
       <div>

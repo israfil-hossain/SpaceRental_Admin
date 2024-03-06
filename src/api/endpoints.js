@@ -16,18 +16,24 @@ export const API = {
   UpdateUser :'/api/ApplicationUser/UpdateOwnProfile',//update profile
   UpdateProfile :'/api/ApplicationUser/UpdateOwnProfilePicture',//update profile picture
   // Space Type
-  CreateSpaceType: "/SpaceType/Create", // post
-  GetSpaceType: "/SpaceType/GetAll", //get
-  GetSingleSpaceType: "/SpaceType/GetById/{DocId}", //get
-  UpdateSpaceType: "/SpaceType/UpdateById/{DocId}", //patch
-  DeleteSpaceType: "/SpaceType/DeleteById/{DocId}", //delete
+  CreateSpaceType: "/api/SpaceType/Create", // post
+  GetSpaceType: "/api/SpaceType/GetAll", //get
+  GetSingleSpaceType: "/api/SpaceType/GetById/{DocId}", //get
+  UpdateSpaceType: "/api/SpaceType/UpdateById/", //patch
+  DeleteSpaceType: "/api/SpaceType/DeleteById/{DocId}", //delete
+
+  //Terms And Condition....
+  CreateTermsAndCondition : "/api/TermsAndCondition/Create",
+  UpdateTermsAndCondition : "/api/TermsAndCondition/UpdateById/",
+  GetAllTermsAndCondition : "/api/TermsAndCondition/GetAll",
+
 
   //SpaceAccess Option
-  SpaceAccessCreate: "/SpaceAccessOption/Create", //post
-  GetSpaceAccessOption: "/SpaceAccessOption/GetAll", // get
-  GetSingleAccessOption: "/SpaceAccessOption/GetById/{DocId}", //get
-  UpdateAccessOption: "/SpaceAccessOption/UpdateById/{DocId}", //update-patch
-  DeleteAccessOption: "/SpaceAccessOption/DeleteById/{DocId}", //delete
+  SpaceAccessCreate: "/api/SpaceAccessOption/Create", //post
+  GetSpaceAccessOption: "/api/SpaceAccessOption/GetAll", // get
+  GetSingleAccessOption: "/api/SpaceAccessOption/GetById/{DocId}", //get
+  UpdateAccessOption: "/api/SpaceAccessOption/UpdateById/{DocId}", //update-patch
+  DeleteAccessOption: "/api/SpaceAccessOption/DeleteById/{DocId}", //delete
 
   // Storage  Condition Features
   StorageConditionCreate: "/api/StorageConditionFeature/Create", //post

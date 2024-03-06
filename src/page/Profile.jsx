@@ -44,7 +44,6 @@ const Profile = () => {
         toast.error(`${response.data.message}`);
       },
     });
-  console.log(userData);
   const handleSubmit = (values, { setSubmitting, resetForm }) => {
     changePasswordMutation(values);
     setSubmitting(false);
