@@ -13,10 +13,10 @@ import { useQuery } from "@tanstack/react-query";
 import DefaultTable from "../components/common/DefaultTable";
 import CustomSearchField from "../components/common/SearchField";
 
+import { CommonSelect } from "../components/common/ui";
 import { months } from "../constants/Data/constantsData";
 import { userHeading } from "../constants/TableColumns/userHeadings";
 import { getCurrentMonth } from "../utils/CommonFunction";
-import { CommonSelect } from "../components/common/ui";
 
 const Users = () => {
   const [page, setPage] = useState(1);
@@ -26,7 +26,7 @@ const Users = () => {
   const currentMonth = getCurrentMonth();
 
   const { data: allUsers = {}, isLoading: allUsersLoading } = useQuery([
-    `/api/User/GetAll?UserRole=${roleTab}&Page=${page}&PageSize=${size}&Email=${emailSearch}`,
+    `/api/ApplicationUser/GetAll?UserRole=${roleTab}&Page=${page}&PageSize=${size}&Email=${emailSearch}`,
   ]);
 
   const [selectedOption, setSelectedOption] = useState(currentMonth);
