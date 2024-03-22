@@ -1,32 +1,34 @@
+const postFix = "/api"
 export const API ={
     // Authentication 
-    SignUp : '/Auth/Signup', //post 
-    Login : '/Auth/SignIn', //post 
-    RefreshToken : '/Auth/TokenRefresh',  //post 
-    RevokeToken : '/Auth/TokenRevoke',  //post 
-    ChangePassword : '/api/Auth/ChangePassword',  //post 
-    GetLoginUser : '/Auth/GetLoggedInUser', //get 
-    GetProfile : '/Auth/UpdateProfilePicture', // patch 
+
+    SignUp : '/api/Authentication/Signup', //post 
+    Login : '/api/Authentication/SignIn', //post 
+    RefreshToken : '/api/Authentication/TokenRefresh',  //post 
+    RevokeToken : '/api/Authentication/TokenRevoke',  //post 
+    ChangePassword : '/api/api/Authentication/ChangePassword',  //post 
+    GetLoginUser : '/api/Authentication/GetLoggedInUser', //get 
+    GetProfile : '/api/Authentication/UpdateProfilePicture', // patch 
 
     // User...... 
-    PostUser : '/User/Create', //post 
-    GetUser : '/User/GetAll', //get  
-    GetSingleUser : '/User/GetById/{DocId}' , //get 
-    DeleteUser : '/User/DeleteById/{DocId}', // delete 
+    PostUser : '/api/User/Create', //post 
+    GetUser : '/api/User/GetAll', //get  
+    GetSingleUser : '/api/User/GetById/{DocId}' , //get 
+    DeleteUser : '/api/User/DeleteById/{DocId}', // delete 
 
     // Space Type 
-    CreateSpaceType : '/SpaceType/Create' , // post 
-    GetSpaceType : '/SpaceType/GetAll', //get 
-    GetSingleSpaceType : '/SpaceType/GetById/{DocId}', //get 
-    UpdateSpaceType : '/SpaceType/UpdateById/{DocId}', //patch 
-    DeleteSpaceType : '/SpaceType/DeleteById/{DocId}', //delete
+    CreateSpaceType : '/api/SpaceType/Create' , // post 
+    GetSpaceType : '/api/SpaceType/GetAll', //get 
+    GetSingleSpaceType : '/api/SpaceType/GetById/{DocId}', //get 
+    UpdateSpaceType : '/api/SpaceType/UpdateById/{DocId}', //patch 
+    DeleteSpaceType : '/api/SpaceType/DeleteById/{DocId}', //delete
 
     //SpaceAccess Option 
-    SpaceAccessCreate : '/SpaceAccessOption/Create', //post 
-    GetSpaceAccessOption : '/SpaceAccessOption/GetAll', // get 
-    GetSingleAccessOption : '/SpaceAccessOption/GetById/{DocId}', //get 
-    UpdateAccessOption : '/SpaceAccessOption/UpdateById/{DocId}', //update-patch 
-    DeleteAccessOption : '/SpaceAccessOption/DeleteById/{DocId}', //delete 
+    SpaceAccessCreate : '/api/SpaceAccessMethod/Create', //post 
+    GetAllSpaceAccess : '/api/SpaceAccessMethod/GetAll', // get 
+    GetSingleAccessOption : '/api/SpaceAccessMethod/GetById/{DocId}', //get 
+    UpdateAccessOption : '/api/SpaceAccessMethod/UpdateById/{DocId}', //update-patch 
+    DeleteAccessOption : '/api/SpaceAccessMethod/DeleteById/{DocId}', //delete 
 
     // Storage  Condition Features 
     StorageConditionCreate : '/api/StorageConditionFeature/Create', //post 
