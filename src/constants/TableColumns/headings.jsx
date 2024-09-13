@@ -105,9 +105,131 @@ const spaceTypeHeadings = [
   },
 ];
 
+const AccessTypeHeadings = [
+  {
+    label: "Access Type",
+    key: "name",
+    className: "custom-class",
+  },
+  {
+    label: "STATUS",
+    key: "isActive",
+    className: "custom-class",
+    render: (value) => (
+      
+      <div className="text-sm font-normal">
+       
+        <p className={`${value === true ? 'bg-[#CDF8D8]' : 'bg-[#fcbab1]'} w-28 rounded-lg p-1 text-center`}>
+          {value ? "Active" : "Inactive"}
+        </p>
+
+      </div>
+    ),
+  },
+]
+
+const StorageTypeHeadings = [
+  {
+    label: "Storage Condition",
+    key: "name",
+    className: "custom-class",
+  },
+  {
+    label: "STATUS",
+    key: "isActive",
+    className: "custom-class",
+    render: (value) => (
+      
+      <div className="text-sm font-normal">
+       
+        <p className={`${value === true ? 'bg-[#CDF8D8]' : 'bg-[#fcbab1]'} w-28 rounded-lg p-1 text-center`}>
+          {value ? "Active" : "Inactive"}
+        </p>
+
+      </div>
+    ),
+  },
+]
+
+const UnloadMovesHeadings = [
+  {
+    label: "Unload Moves",
+    key: "name",
+    className: "custom-class",
+  },
+  {
+    label: "STATUS",
+    key: "isActive",
+    className: "custom-class",
+    render: (value) => (
+      
+      <div className="text-sm font-normal">
+       
+        <p className={`${value === true ? 'bg-[#CDF8D8]' : 'bg-[#fcbab1]'} w-28 rounded-lg p-1 text-center`}>
+          {value ? "Active" : "Inactive"}
+        </p>
+
+      </div>
+    ),
+  },
+]
+
+const ScheduleHeadings = [
+  {
+    label: "Schedule Condition",
+    key: "name",
+    className: "custom-class",
+  },
+  {
+    label: "STATUS",
+    key: "isActive",
+    className: "custom-class",
+    render: (value) => (
+      
+      <div className="text-sm font-normal">
+       
+        <p className={`${value === true ? 'bg-[#CDF8D8]' : 'bg-[#fcbab1]'} w-28 rounded-lg p-1 text-center`}>
+          {value ? "Active" : "Inactive"}
+        </p>
+
+      </div>
+    ),
+  },
+]
+
+const SecurityHeadings = [
+  {
+    label: "Security Condition",
+    key: "name",
+    className: "custom-class",
+  },
+  {
+    label: "STATUS",
+    key: "isActive",
+    className: "custom-class",
+    render: (value) => (
+      
+      <div className="text-sm font-normal">
+       
+        <p className={`${value === true ? 'bg-[#CDF8D8]' : 'bg-[#fcbab1]'} w-28 rounded-lg p-1 text-center`}>
+          {value ? "Active" : "Inactive"}
+        </p>
+
+      </div>
+    ),
+  },
+]
+
+
+
 export { 
   topUserHeader, 
   permissionHeadings, 
   conditionHeadings,
-  spaceTypeHeadings
+  spaceTypeHeadings,
+  AccessTypeHeadings,
+  StorageTypeHeadings,
+  UnloadMovesHeadings,
+  ScheduleHeadings,
+  SecurityHeadings
 };

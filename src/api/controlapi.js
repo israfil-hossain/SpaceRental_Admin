@@ -1,9 +1,9 @@
 const SpaceAccessApi = {
   SpaceAccessCreate: "/api/SpaceAccessMethod/Create", //post
   GetAllSpaceAccess: "/api/SpaceAccessMethod/GetAll", // get
-  GetSingleAccessOption: "/api/SpaceAccessMethod/GetById/{DocId}", //get
-  UpdateAccessOption: "/api/SpaceAccessMethod/UpdateById/{DocId}", //update-patch
-  DeleteAccessOption: "/api/SpaceAccessMethod/DeleteById/{DocId}", //delete
+  GetSingleAccessOption: "/api/SpaceAccessMethod/GetById/", //get
+  UpdateAccessOption: "/api/SpaceAccessMethod/UpdateById/", //update-patch
+  DeleteAccessOption: "/api/SpaceAccessMethod/DeleteById", //delete
 };
 
 const TermsAPI = {
@@ -23,16 +23,31 @@ const SpaceTypeAPI = {
 };
 
 const SpaceScheduleAPI = {
-  SpaceScheduleFeatureCreate: "/api/SpaceScheduleFeature/Create", //post
-  GetSpaceScheduleFeature: "/api/SpaceScheduleFeature/GetAll", //get
-  DeleteSpaceScheduleFeature: "/api/SpaceScheduleFeature/DeleteById", //delete
+  SpaceScheduleCreate: "/api/SpaceSchedule/Create", //post
+  GetSpaceSchedule: "/api/SpaceSchedule/GetAll", //get
+  DeleteSpaceSchedule: "/api/SpaceSchedule/DeleteById", //delete
+  DropdownSchedule : "/api/SpaceSchedule/GetAllForDropdown"
 };
 
 const SpaceSecurityAPI = {
-  SpaceSecurityFeatureCreate: "/api/SpaceSecurityFeature/Create", //post
-  GetSpaceSecurityFeature: "/api/SpaceSecurityFeature/GetAll", //get
-  DeleteSpaceSecurityFeature: "/api/SpaceSecurityFeature/DeleteById/{DocId}", //delete
+  SpaceSecurityCreate: "/api/SpaceSecurity/Create", //post
+  GetSpaceSecurity: "/api/SpaceSecurity/GetAll", //get
+  DeleteSpaceSecurity: "/api/SpaceSecurity/DeleteById", //delete
 };
+
+const StorageAPI = {
+  StorageCreate : "/api/StorageCondition/Create", 
+  GetStorageAll : "/api/StorageCondition/GetAll", 
+  DeleteStorage : "/api/StorageCondition/DeleteById", 
+  DropdownStorage : "/api/StorageCondition/GetAllForDropdown", 
+}
+
+const UnloadAPI = {
+  UnloadCreate : "/api/UnloadingAndMoving/Create", 
+  GetUnloadAll : "/api/UnloadingAndMoving/GetAll", 
+  DeleteUnload : "/api/UnloadingAndMoving/DeleteById", 
+  DropdownUnload : "/api/UnloadingAndMoving/GetAllForDropdown", 
+}
 
 export {
   SpaceAccessApi,
@@ -40,4 +55,6 @@ export {
   SpaceTypeAPI,
   SpaceScheduleAPI,
   SpaceSecurityAPI,
+  StorageAPI,
+  UnloadAPI
 };

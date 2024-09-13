@@ -3,12 +3,12 @@ import { useContext, useEffect, useRef, useState } from "react";
 import { useMediaQuery } from "react-responsive";
 import { Link, NavLink, useLocation } from "react-router-dom";
 import { MenuContext } from "../../../context/MenuContext";
-import { FaCar } from "react-icons/fa";
+import { FaCalendarAlt, FaCar } from "react-icons/fa";
 import { useQueryClient } from "@tanstack/react-query";
 import { AiOutlineAppstore, AiOutlineControl } from "react-icons/ai";
 import { BsPerson } from "react-icons/bs";
 import { FiLogOut } from "react-icons/fi";
-import { MdContactSupport, MdMenu, MdOutlinePayments } from "react-icons/md";
+import { MdContactSupport, MdMenu, MdOutlinePayments, MdSecurity, MdStorage } from "react-icons/md";
 import { PiUsersThreeLight } from "react-icons/pi";
 import { RiStore2Line } from "react-icons/ri";
 import { logo, profile } from "../../../assets";
@@ -17,6 +17,7 @@ import { convertToTitleCase } from "../../../utils/CommonFunction";
 import { removeTokens } from "../../../utils/localStorageUtils";
 import Submenu from "./Submenu"; // Import Submenu component
 import CommonTooltip from "../../common/CommonTooltip";
+import { IoAccessibility, IoMoveSharp } from "react-icons/io5";
 
 const Sidebar = () => {
   let isTabletMid = useMediaQuery({ query: "(max-width: 768px)" });
@@ -88,32 +89,27 @@ const Sidebar = () => {
       {
         name: "Security",
         link: "/control-panel/security",
-        icon: AiOutlineControl,
+        icon: MdSecurity,
       },
       {
-        name: "Access",
-        link: "/control-panel/access",
-        icon: AiOutlineControl,
-      },
-      {
-        name: "Storage Condition",
-        link: "/control-panel/storage",
-        icon: AiOutlineControl,
-      },
-      {
-        name: "Unload",
-        link: "/control-panel/unload",
-        icon: AiOutlineControl,
+        name: "Access Method",
+        link: "/control-panel/access-method",
+        icon: IoAccessibility,
       },
       {
         name: "Storage Condition",
-        link: "/control-panel/storage",
-        icon: AiOutlineControl,
+        link: "/control-panel/storage-condition",
+        icon: MdStorage,
       },
       {
-        name: "Unload",
-        link: "/control-panel/unload",
-        icon: AiOutlineControl,
+        name: "Unload Move",
+        link: "/control-panel/unload-move",
+        icon: IoMoveSharp,
+      },
+      {
+        name: "Schedule",
+        link: "/control-panel/schedule",
+        icon: FaCalendarAlt,
       },
     ],
   };
