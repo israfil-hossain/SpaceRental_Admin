@@ -11,6 +11,7 @@ const CommonSelect = ({
   border,
   width,
   disabled,
+  defaultValue
   
 }) => {
   
@@ -29,7 +30,7 @@ const CommonSelect = ({
       <FormControl
         sx={{
           m: 0,
-          minWidth: width !== undefined ? width : 120,
+          minWidth: width !== undefined ? width : 60,
           background: "#ffffff",
           borderRadius: 3,
           border: border !== undefined ? border : "none", // Set border to "none" if not provided
@@ -41,6 +42,7 @@ const CommonSelect = ({
           labelId={labelId}
           id={id}
           value={value}
+          defaultValue={defaultValue}
           onChange={handleChange}
           label={label}
           disabled={disabled}

@@ -1,8 +1,8 @@
 import React from "react";
-import Button from "@mui/material/Button";
+import Loader from "../Loader";
 
 export default function CommonButton(props) {
-  const { className, icon, text, color, type,onClick } = props;
+  const { className, icon, text, color, type, onClick, isLoading } = props;
 
   return (
     <button
@@ -11,9 +11,11 @@ export default function CommonButton(props) {
       onClick={onClick}
     >
       {icon ? icon : ""}
-      <span className="lg:text-sm xs:text-xs ">{text}</span>
+      {isLoading ? (
+        <Loader size={20}/>
+      ) : (
+        <span className="lg:text-sm xs:text-xs ">{text}</span>
+      )}
     </button>
   );
 }
-
-

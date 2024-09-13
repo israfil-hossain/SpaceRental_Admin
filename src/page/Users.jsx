@@ -73,7 +73,7 @@ const Users = () => {
                   aria-label="basic tabs example"
                 >
                   <Tab label="All" value={""} />
-                  <Tab label="Space Owners" value={"SPACE_OWNER"} />
+                  <Tab label="Space Owners" value={"OWNER"} />
                   <Tab label="Rental Users" value={"RENTER"} />
                 </Tabs>
               </Box>

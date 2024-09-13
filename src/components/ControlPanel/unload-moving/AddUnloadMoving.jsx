@@ -1,15 +1,7 @@
 import React, { Fragment, useState } from "react";
-import { CommonButton, CommonInputText, CommonSelect } from "../common/ui";
-import { isLargeScreen } from "../../utils/CommonFunction";
-import { Status } from "../../constants/Data/constantsData";
 import { ErrorMessage, Field, Formik, Form } from "formik";
 import { toast } from "react-toastify";
-
-import { addconditionValidation } from "../../validations";
-import { Progress } from "../common/Progress";
 import { BiLockAlt } from "react-icons/bi";
-import { useCreate, useUpdate } from "../../hooks";
-import { API } from "../../api/endpoints";
 import {
   Backdrop,
   Box,
@@ -21,10 +13,12 @@ import {
   Typography,
 } from "@mui/material";
 import { AiOutlineCloseCircle } from "react-icons/ai";
-import usePatch from "../../hooks/usePatch";
-import Loader from "../common/Loader";
-import { TermsAPI } from "../../api/controlapi";
-
+import { Status } from "../../../constants/Data/constantsData";
+import Loader from "../../common/Loader";
+import { useCreate, usePatch } from "../../../hooks";
+import { CommonButton, CommonInputText, CommonSelect } from "../../common/ui";
+import { UnloadAPI } from "../../../api/controlapi";
+import unloadValidation from "./unloadValidation";
 
 const style = {
   position: "absolute",
@@ -38,50 +32,37 @@ const style = {
   boxShadow: `3px 2px 3px 1px rgba(0, 0, 0, 0.2)`,
   p: 4,
 };
-const AddCondition = ({ data, refetch, open, onClose }) => {
-  const [status, setStatus] = useState(data ? data?.isActive : true);
-  const isLarge = isLargeScreen();
+const AddUnloadMoving = ({refetch, open, onClose }) => {
+  const [status, setStatus] = useState(true);
 
   const { mutateAsync: createmutate, isLoading: createLoading } = useCreate({
-    endpoint: TermsAPI.TermsAndConditionCreate, // Replace with your actual API endpoint
+    endpoint: UnloadAPI.UnloadCreate, // Replace with your actual API endpoint
     onSuccess: (data) => {
-      toast.success("Add Condition Successfully !");
+      toast.success("Add Unload Successfully !");
       refetch();
       onClose();
     },
     onError: (error) => {
       // Handle update error, e.g., display an error message
-      console.error("Update failed", error);
+      console.error("Create failed", error);
       toast.error("Something went wrong !");
     },
   });
-  const { mutateAsync: updateMutate, isLoading: updateLoading } = usePatch({
-    endpoint: TermsAPI.UpdateTermsAndConditon + data?._id, // Replace with your actual API endpoint
-    onSuccess: (data) => {
-      toast.success("Update Condition Successfully !");
-      refetch();
-      onClose();
-    },
-    onError: (error) => {
-      // Handle update error, e.g., display an error message
-      console.error("Update failed", error);
-      toast.error("Something went wrong !");
-    },
-  });
-
+ 
   const handleSubmit = async (values, { setSubmitting, resetForm }) => {
     try {
-      let payload = { ...values, isActive: status };
-      if (data?._id) {
-        await updateMutate(payload);
-      } else {
-        await createmutate(payload);
-      }
+      let payload = {
+        ...values,
+        isActive: status,
+      };
+
+      await createmutate(payload);
+
       setSubmitting(false);
       resetForm();
     } catch (e) {
       setSubmitting(true);
-      console.log("Error during Create ", e);
+      console.error("Error during Create ", e);
     }
   };
 
@@ -105,11 +86,10 @@ const AddCondition = ({ data, refetch, open, onClose }) => {
             <div>
               <Formik
                 initialValues={{
-                  name: data ? data?.name : "",
-                  checkboxText: data ? data?.checkboxText : "",
-                  content: data ? data?.content : "",
+                  name:"",
+                  isActive: status,
                 }}
-                validationSchema={addconditionValidation}
+                validationSchema={unloadValidation}
                 onSubmit={handleSubmit}
               >
                 {({
@@ -131,7 +111,7 @@ const AddCondition = ({ data, refetch, open, onClose }) => {
                       }}
                     >
                       <Typography variant="h5" component="h5">
-                        {data ? "Update " : "Add "} Condition
+                        {"Add "} Unload and Moving
                       </Typography>
                       <div style={{}}>
                         <IconButton
@@ -153,7 +133,7 @@ const AddCondition = ({ data, refetch, open, onClose }) => {
                       </div>
                     </Box>
                     <Divider sx={{ mb: 2 }}>
-                      <Chip label="Condition" />
+                      <Chip label="Unload & Moving" />
                     </Divider>
 
                     <div className="mt-4 pb-3">
@@ -161,63 +141,19 @@ const AddCondition = ({ data, refetch, open, onClose }) => {
                         <Field
                           name="name"
                           id="name"
-                          label="Condition Name"
+                          label="Unload Name"
                           placeholder="Type here"
                           component={CommonInputText}
                           onChange={handleChange}
                           value={values.name}
                           error={touched.name && errors.name}
-                          className={`
-                    
-                    appearance-none  block
-                    ${touched.name && errors.name ? "border-red-500" : ""}`}
+                          className={`appearance-none  block
+                          ${
+                            touched.name && errors.name ? "border-red-500" : ""
+                          }`}
                         />
                         <ErrorMessage
                           name="name"
-                          component="div"
-                          className="mt-2 text-sm text-red-600"
-                        />
-                      </div>
-                      <div>
-                        <Field
-                          name="checkboxText"
-                          id="checkboxText"
-                          label="Checkbox text"
-                          placeholder="Type here"
-                          onChange={handleChange}
-                          component={CommonInputText}
-                          value={values.checkboxText}
-                          className={` ${
-                            touched.checkboxText && errors.checkboxText
-                              ? "border-red-500"
-                              : ""
-                          }`}
-                        />
-                        <ErrorMessage
-                          name="checkboxText"
-                          component="div"
-                          className="mt-2 text-sm text-red-600"
-                        />
-                      </div>
-
-                      <div>
-                        <Field
-                          name="content"
-                          id="content"
-                          label="Content"
-                          placeholder="Type here"
-                          textformat="rich"
-                          component={CommonInputText}
-                          value={values.content}
-                          onChange={handleChange}
-                          className={` ${
-                            touched.content && errors.content
-                              ? "border-red-500"
-                              : ""
-                          }`}
-                        />
-                        <ErrorMessage
-                          name="content"
                           component="div"
                           className="mt-2 text-sm text-red-600"
                         />
@@ -233,6 +169,7 @@ const AddCondition = ({ data, refetch, open, onClose }) => {
                           options={Status}
                           component={CommonSelect}
                           value={status}
+                          defaultValue={values?.isActive}
                           width={387}
                         />
                       </div>
@@ -252,7 +189,7 @@ const AddCondition = ({ data, refetch, open, onClose }) => {
                         className="group relative w-44 flex justify-center py-3 px-4 border border-transparent text-sm font-medium rounded-md text-white bg-primary hover:bg-[#cacc57] focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-500"
                       >
                         <span className="absolute left-0 inset-y-0 flex items-center pl-3">
-                          {createLoading || updateLoading ? (
+                          {createLoading  ? (
                             <Loader size={18} />
                           ) : (
                             <BiLockAlt
@@ -261,7 +198,7 @@ const AddCondition = ({ data, refetch, open, onClose }) => {
                             />
                           )}
                         </span>
-                        {data?._id ? "Update Changes" : "Save Changes"}
+                        {"Save Changes"}
                       </button>
                     </div>
                   </Form>
@@ -275,4 +212,4 @@ const AddCondition = ({ data, refetch, open, onClose }) => {
   );
 };
 
-export default AddCondition;
+export default AddUnloadMoving;

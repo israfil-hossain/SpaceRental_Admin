@@ -18,8 +18,15 @@ const Signin = lazy(() => import("./page/Signin"));
 
 const Stores = lazy(() => import("./page/Stores"));
 const Earnings = lazy(() => import("./page/Earnings"));
-const ControlPanel = lazy(() => import("./page/ControlPanel"));
 const Transport = lazy(() => import("./page/Transport"));
+
+const ControlPanel = lazy(() => import("./page/Controlpanel/ControlPanel"));
+const Security = lazy(() => import("./page/Controlpanel/security"));
+const AccessMethod = lazy(() => import("./page/Controlpanel/accessmethod"));
+const StorageCondition = lazy(() => import("./page/Controlpanel/storage-conditions"));
+const UnloadMoving = lazy(() => import("./page/Controlpanel/unload-moving"));
+const Schedule = lazy(() => import("./page/Controlpanel/schedule"));
+
 
 
 const App = () => {
@@ -69,10 +76,34 @@ const App = () => {
               path: "earnings",
               element: <Earnings />,
             },
+
+            //Control Panel .... 
             {
               path: "control-panel",
               element: <ControlPanel />,
             },
+            {
+              path: "control-panel/security",
+              element: <Security />,
+            },
+            {
+              path: "control-panel/access-method",
+              element: <AccessMethod />,
+            },
+            {
+              path: "control-panel/storage-condition",
+              element: <StorageCondition />,
+            },
+            {
+              path: "control-panel/unload-move",
+              element: <UnloadMoving />,
+            },
+            {
+              path: "control-panel/schedule",
+              element: <Schedule />,
+            },
+            
+           
             {
               path: "support",
               element: <Support />,

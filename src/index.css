@@ -18,10 +18,21 @@
 .link {
   @apply p-2.5 flex rounded-md gap-6  items-center md:cursor-pointer cursor-default duration-300 font-bold font-sans;
 }
-
 .active {
   @apply bg-[#DCE102] text-black ;
 }
+
+.sublink {
+  @apply  flex  gap-3 pt-2 pb-2 pl-2  items-center md:cursor-pointer cursor-default duration-300 font-bold font-sans;
+}
+
+.sublink {
+  @apply text-white ;
+}
+.sublink.active {
+  @apply  text-yellow-400 border-l-4 border-yellow-400 bg-transparent;
+}
+
 
 .link {
   @apply text-white; 

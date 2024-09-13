@@ -20,6 +20,10 @@ const formatDateString = (date) => {
   return !!date ? moment(date).format("DD MMM, YYYY") : "";
 };
 
+const formatDateandTime = (date) => {
+  return !!date ? moment(date).format("DD MMM, YYYY hh:mm A") : "";
+};
+
 export const convertToTitleCase = (str = "") => {
   if (typeof str !== "string") return str;
 
@@ -29,4 +33,4 @@ export const convertToTitleCase = (str = "") => {
     .replace(/_/g, " ");
 };
 
-export { formatDateString, getCurrentMonth, isLargeScreen };
+export { formatDateString, getCurrentMonth, isLargeScreen ,formatDateandTime};

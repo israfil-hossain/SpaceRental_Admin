@@ -1,47 +1,28 @@
+const postFix = "/api";
 export const API = {
   // Authentication
-  SignUp: "/Auth/Signup", //post
-  Login: "/Auth/SignIn", //post
-  RefreshToken: "/Auth/TokenRefresh", //post
-  RevokeToken: "/Auth/TokenRevoke", //post
-  ChangePassword: "/api/Authentication/ChangePassword", //post
-  GetLoginUser: "/Auth/GetLoggedInUser", //get
-  GetProfile: "/Auth/UpdateProfilePicture", // patch
+
+  SignUp: "/api/Authentication/Signup", //post
+  Login: "/api/Authentication/SignIn", //post
+  RefreshToken: "/api/Authentication/TokenRefresh", //post
+  RevokeToken: "/api/Authentication/TokenRevoke", //post
+  ChangePassword: "/api/api/Authentication/ChangePassword", //post
+  GetLoginUser: "/api/Authentication/GetLoggedInUser", //get
+  GetProfile: "/api/Authentication/UpdateProfilePicture", // patch
 
   // User......
-  PostUser: "/User/Create", //post
-  GetUser: "/User/GetAll", //get
-  GetSingleUser: "/User/GetById/{DocId}", //get
-  DeleteUser: "/User/DeleteById/{DocId}", // delete
+  PostUser: "/api/User/Create", //post
+  GetUser: "/api/User/GetAll", //get
+  GetSingleUser: "/api/User/GetById/{DocId}", //get
+  DeleteUser: "/api/User/DeleteById/{DocId}", // delete
 
-  // Space Type
-  CreateSpaceType: "/SpaceType/Create", // post
-  GetSpaceType: "/SpaceType/GetAll", //get
-  GetSingleSpaceType: "/SpaceType/GetById/{DocId}", //get
-  UpdateSpaceType: "/SpaceType/UpdateById/{DocId}", //patch
-  DeleteSpaceType: "/SpaceType/DeleteById/{DocId}", //delete
+  // Control Panel API ...................................................................
 
-  //SpaceAccess Option
-  SpaceAccessCreate: "/SpaceAccessOption/Create", //post
-  GetSpaceAccessOption: "/SpaceAccessOption/GetAll", // get
-  GetSingleAccessOption: "/SpaceAccessOption/GetById/{DocId}", //get
-  UpdateAccessOption: "/SpaceAccessOption/UpdateById/{DocId}", //update-patch
-  DeleteAccessOption: "/SpaceAccessOption/DeleteById/{DocId}", //delete
+    // Configuration API  
+    UpdateCommision : "/api/Configuration/SetCommissionSettings", 
+    GetCommision : "/api/Configuration/GetCommissionSettings", 
 
-  // Storage  Condition Features
-  StorageConditionCreate: "/api/StorageConditionFeature/Create", //post
-  GetStorageCondition: "/api/StorageConditionFeature/GetAll", // get
-  DeleteStorageCondition: "/api/StorageConditionFeature/DeleteById", // delete
-
-  // Space Security Features
-  SpaceSecurityFeatureCreate: "/api/SpaceSecurityFeature/Create", //post
-  GetSpaceSecurityFeature: "/api/SpaceSecurityFeature/GetAll", //get
-  DeleteSpaceSecurityFeature: "/api/SpaceSecurityFeature/DeleteById/{DocId}", //delete
-
-  // Space Schedule Features
-  SpaceScheduleFeatureCreate: "/api/SpaceScheduleFeature/Create", //post
-  GetSpaceScheduleFeature: "/api/SpaceScheduleFeature/GetAll", //get
-  DeleteSpaceScheduleFeature: "/api/SpaceScheduleFeature/DeleteById/{DocId}", //delete
+  //.............................................................................................
 
   // Space For Rent
   SpaceForRentCreate: "/api/SpaceForRent/Create", //post
@@ -53,4 +34,13 @@ export const API = {
   AddSpaceImage: "/api/SpaceForRent/AddSpaceImageById/{DocId}", //post
   DeleteSpaceImage:
     "/api/SpaceForRent/DeleteSpaceImageById/{SpaceId}/{ImageId}", //delete
+
+  // Supports 
+  GetAllTicket : "/api/Support/GetAllTickets", 
+  CreateTicket : "/api/Support/CreateTicket", 
+  GetSupportStatus : "/api/Support/GetSupportStatusForDropdown", 
+  UpdateTicketById : "/api/Support/UpdateTicketById/", 
+  GetAllMessage : "/api/Support/GetAllMessagesById/", 
+  AddMessage : "/api/Support/AddMessageById/"
+
 };

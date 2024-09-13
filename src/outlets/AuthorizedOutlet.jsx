@@ -8,7 +8,7 @@ import { MenuContext } from "../context/MenuContext";
 const AuthorizedOutlet = () => {
   const { userFound } = useAuthUserContext();
   const { pathname } = useLocation();
-  const { toggleMenu } = useContext(MenuContext);
+  
 
   if (!userFound) {
     return <Navigate to={"/login"} state={{ authSuccessRedirect: pathname }} />;
