@@ -1,12 +1,17 @@
 import { Box, Breadcrumbs } from "@mui/material";
-import React from "react";
+import React, { useState } from "react";
 import { MdContactSupport } from "react-icons/md";
 import { Link } from "react-router-dom";
 import Chat from "../components/Chat/Chat";
 import ChatList from "../components/Chat/ChatList";
 import PackageBreadcrumb from "../components/common/PackageBreadcrumb";
+import { nomessage } from "../assets";
 
 const Support = () => {
+  const [isOpen, setIsOpen] = useState(false);
+  const [id, setId] = useState("");
+  const [user,setUser] = useState();
+
   return (
     <>
       <div className=" overflow-hidden">
@@ -24,8 +29,14 @@ const Support = () => {
           </Breadcrumbs>
         </PackageBreadcrumb>
         <div className="flex h-[85vh]">
-          <ChatList />
-          <Chat />
+          <ChatList setIsOpen={setIsOpen} setId={setId} setUser={setUser}/>
+          {isOpen ? (
+            <Chat id={id} user={user}/>
+          ) : (
+            <div className="w-full h-full px-5 py-5 flex flex-col justify-center items-center">
+              <img src={nomessage} alt="nomessage " className="w-60 h-60"/>{" "}
+            </div>
+          )}
         </div>
       </div>
     </>

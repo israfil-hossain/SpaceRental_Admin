@@ -77,8 +77,37 @@ const conditionHeadings = [
   },
 ];
 
+const spaceTypeHeadings = [
+  {
+    label: "Space Type",
+    key: "name",
+    className: "custom-class",
+  },
+  {
+    label: "Price Per Month",
+    key: "pricePerMonth",
+    className: "custom-class",
+  },
+  {
+    label: "STATUS",
+    key: "isActive",
+    className: "custom-class",
+    render: (value) => (
+      
+      <div className="text-sm font-normal">
+       
+        <p className={`${value === true ? 'bg-[#CDF8D8]' : 'bg-[#fcbab1]'} w-28 rounded-lg p-1 text-center`}>
+          {value ? "Active" : "Inactive"}
+        </p>
+
+      </div>
+    ),
+  },
+];
+
 export { 
   topUserHeader, 
   permissionHeadings, 
-  conditionHeadings 
+  conditionHeadings,
+  spaceTypeHeadings
 };

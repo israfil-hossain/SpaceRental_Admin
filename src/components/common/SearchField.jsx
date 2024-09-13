@@ -4,7 +4,7 @@ import Paper from "@mui/material/Paper";
 import React, { useEffect, useState } from "react";
 import { FiSearch } from "react-icons/fi";
 
-export default function CustomSearchField({ name = "", onChange = () => {} }) {
+export default function CustomSearchField({ name = "", onChange = () => {}, placeholder = "Search.."}) {
   const [value, setValue] = useState("");
   const [debouncedValue, setDebouncedValue] = useState("");
 
@@ -55,7 +55,7 @@ export default function CustomSearchField({ name = "", onChange = () => {} }) {
       </IconButton>
       <InputBase
         sx={{ ml: 1, flex: 1 }}
-        placeholder={`${name}`}
+        placeholder={placeholder}
         value={value}
         onChange={handleChange}
         inputProps={{ "aria-label": "Search Information " }}

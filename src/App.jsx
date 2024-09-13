@@ -18,7 +18,7 @@ const Signin = lazy(() => import("./page/Signin"));
 
 const Stores = lazy(() => import("./page/Stores"));
 const Earnings = lazy(() => import("./page/Earnings"));
-const ControlPanel = lazy(() => import("./page/ControlPanel"));
+const ControlPanel = lazy(() => import("./page/Controlpanel/ControlPanel"));
 const Transport = lazy(() => import("./page/Transport"));
 
 
@@ -73,6 +73,11 @@ const App = () => {
               path: "control-panel",
               element: <ControlPanel />,
             },
+            {
+              path: "control-panel/security",
+              element: <ControlPanel />,
+            },
+           
             {
               path: "support",
               element: <Support />,

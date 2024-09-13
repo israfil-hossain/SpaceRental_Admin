@@ -9,6 +9,7 @@ export default function CommonInputText({
   className,
   textformat,
   error,
+  type = "text",
   ...rest
 }) {
   return (
@@ -33,7 +34,7 @@ export default function CommonInputText({
       ) : (
         <>
           <input
-            type="text"
+            type={type}
             name={name}
             className={`border border-gray-300  ${className}  bg-[#E7E9E2] rounded-xl py-2 px-3 w-full focus:outline-none focus:ring-1 focus:border-yellow-500 `}
             placeholder={placeholder}
