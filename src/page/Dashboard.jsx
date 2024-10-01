@@ -37,7 +37,7 @@ const Dashboard = () => {
 
   const recentUsers = allUsers?.data
   ?.sort((a, b) => new Date(b.dateJoined) - new Date(a.dateJoined)) // Sort by most recent join date
-  .slice(0, 10); // Get only the top 10 most recent users
+  .slice(0, 5); // Get only the top 10 most recent users
 
   return (
     <Fragment>
@@ -119,13 +119,13 @@ const Dashboard = () => {
                 Top Users
               </div>
               <div className="p-1">
-                <CommonSelect
+                {/* <CommonSelect
                   labelId={"months-select"}
                   id={"months-select-id"}
                   options={months}
                   value={selectedOption}
                   setSelect={setSelectedOption}
-                />
+                /> */}
               </div>
             </div>
             <div className="min-h-80  border border-secondary">
