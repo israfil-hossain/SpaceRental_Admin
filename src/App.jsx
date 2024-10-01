@@ -17,6 +17,8 @@ const Support = lazy(() => import("./page/Support"));
 const Signin = lazy(() => import("./page/Signin"));
 
 const Stores = lazy(() => import("./page/Stores"));
+const SingleStore = lazy(() => import("./page/SingleStore"));
+
 const Earnings = lazy(() => import("./page/Earnings"));
 const Transport = lazy(() => import("./page/Transport"));
 
@@ -65,6 +67,10 @@ const App = () => {
               element: <Stores />,
             },
             {
+              path: "stores/:id",
+              element: <SingleStore />,
+            },
+            {
               path: "users",
               element: <Users />,
             },
@@ -83,23 +89,23 @@ const App = () => {
               element: <ControlPanel />,
             },
             {
-              path: "control-panel/security",
+              path: "security",
               element: <Security />,
             },
             {
-              path: "control-panel/access-method",
+              path: "access-method",
               element: <AccessMethod />,
             },
             {
-              path: "control-panel/storage-condition",
+              path: "storage-condition",
               element: <StorageCondition />,
             },
             {
-              path: "control-panel/unload-move",
+              path: "unload-move",
               element: <UnloadMoving />,
             },
             {
-              path: "control-panel/schedule",
+              path: "schedule",
               element: <Schedule />,
             },
             

@@ -1,25 +1,31 @@
+import dayjs from "dayjs";
 import { calender } from "../../assets/images/icons";
+import { FaUser } from "react-icons/fa";
 
 const topUserHeader = [
   {
     label: "NAME",
-    key: "name",
+    key: "fullName",
     className: "custom-class",
     render: (value, item) => (
       <div className="flex space-x-2">
-        {console.log(item)}
-        <img
-          src={item.image}
-          alt="User"
-          style={{ width: 30, height: 30, borderRadius: "50%" }}
-        />
+        {item?.profilePicture ? (
+          <img
+            src={item?.profilePicture}
+            alt="User"
+            style={{ width: 30, height: 30, borderRadius: "50%" }}
+          />
+        ) : (
+          <FaUser  size={22} className="text-black"/>
+        )}
+
         <p>{value}</p>
       </div>
     ),
   },
   {
     label: "JOINED",
-    key: "join",
+    key: "dateJoined",
     className: "custom-class",
     render: (value) => (
       <div className="flex space-x-2">
@@ -28,7 +34,7 @@ const topUserHeader = [
           alt="calender"
           style={{ width: 20, height: 20, borderRadius: "50%" }}
         />
-        <p>{value}</p>
+        <p>{dayjs(value).format("DD/MM/YYYY")}</p>
       </div>
     ),
   },
@@ -41,7 +47,6 @@ const permissionHeadings = [
     className: "custom-class",
     render: (value, item) => (
       <div className="flex space-x-2">
-        
         <img
           src={item.image}
           alt="User"
@@ -58,20 +63,20 @@ const conditionHeadings = [
     label: "Condition NAME",
     key: "name",
     className: "custom-class",
-    
   },
   {
     label: "STATUS",
     key: "isActive",
     className: "custom-class",
     render: (value) => (
-      
       <div className="text-sm font-normal">
-       
-        <p className={`${value === true ? 'bg-[#CDF8D8]' : 'bg-[#fcbab1]'} w-28 rounded-lg p-1 text-center`}>
+        <p
+          className={`${
+            value === true ? "bg-[#CDF8D8]" : "bg-[#fcbab1]"
+          } w-28 rounded-lg p-1 text-center`}
+        >
           {value ? "Active" : "Inactive"}
         </p>
-
       </div>
     ),
   },
@@ -93,13 +98,14 @@ const spaceTypeHeadings = [
     key: "isActive",
     className: "custom-class",
     render: (value) => (
-      
       <div className="text-sm font-normal">
-       
-        <p className={`${value === true ? 'bg-[#CDF8D8]' : 'bg-[#fcbab1]'} w-28 rounded-lg p-1 text-center`}>
+        <p
+          className={`${
+            value === true ? "bg-[#CDF8D8]" : "bg-[#fcbab1]"
+          } w-28 rounded-lg p-1 text-center`}
+        >
           {value ? "Active" : "Inactive"}
         </p>
-
       </div>
     ),
   },
@@ -116,17 +122,18 @@ const AccessTypeHeadings = [
     key: "isActive",
     className: "custom-class",
     render: (value) => (
-      
       <div className="text-sm font-normal">
-       
-        <p className={`${value === true ? 'bg-[#CDF8D8]' : 'bg-[#fcbab1]'} w-28 rounded-lg p-1 text-center`}>
+        <p
+          className={`${
+            value === true ? "bg-[#CDF8D8]" : "bg-[#fcbab1]"
+          } w-28 rounded-lg p-1 text-center`}
+        >
           {value ? "Active" : "Inactive"}
         </p>
-
       </div>
     ),
   },
-]
+];
 
 const StorageTypeHeadings = [
   {
@@ -139,17 +146,18 @@ const StorageTypeHeadings = [
     key: "isActive",
     className: "custom-class",
     render: (value) => (
-      
       <div className="text-sm font-normal">
-       
-        <p className={`${value === true ? 'bg-[#CDF8D8]' : 'bg-[#fcbab1]'} w-28 rounded-lg p-1 text-center`}>
+        <p
+          className={`${
+            value === true ? "bg-[#CDF8D8]" : "bg-[#fcbab1]"
+          } w-28 rounded-lg p-1 text-center`}
+        >
           {value ? "Active" : "Inactive"}
         </p>
-
       </div>
     ),
   },
-]
+];
 
 const UnloadMovesHeadings = [
   {
@@ -162,17 +170,18 @@ const UnloadMovesHeadings = [
     key: "isActive",
     className: "custom-class",
     render: (value) => (
-      
       <div className="text-sm font-normal">
-       
-        <p className={`${value === true ? 'bg-[#CDF8D8]' : 'bg-[#fcbab1]'} w-28 rounded-lg p-1 text-center`}>
+        <p
+          className={`${
+            value === true ? "bg-[#CDF8D8]" : "bg-[#fcbab1]"
+          } w-28 rounded-lg p-1 text-center`}
+        >
           {value ? "Active" : "Inactive"}
         </p>
-
       </div>
     ),
   },
-]
+];
 
 const ScheduleHeadings = [
   {
@@ -185,17 +194,18 @@ const ScheduleHeadings = [
     key: "isActive",
     className: "custom-class",
     render: (value) => (
-      
       <div className="text-sm font-normal">
-       
-        <p className={`${value === true ? 'bg-[#CDF8D8]' : 'bg-[#fcbab1]'} w-28 rounded-lg p-1 text-center`}>
+        <p
+          className={`${
+            value === true ? "bg-[#CDF8D8]" : "bg-[#fcbab1]"
+          } w-28 rounded-lg p-1 text-center`}
+        >
           {value ? "Active" : "Inactive"}
         </p>
-
       </div>
     ),
   },
-]
+];
 
 const SecurityHeadings = [
   {
@@ -208,28 +218,27 @@ const SecurityHeadings = [
     key: "isActive",
     className: "custom-class",
     render: (value) => (
-      
       <div className="text-sm font-normal">
-       
-        <p className={`${value === true ? 'bg-[#CDF8D8]' : 'bg-[#fcbab1]'} w-28 rounded-lg p-1 text-center`}>
+        <p
+          className={`${
+            value === true ? "bg-[#CDF8D8]" : "bg-[#fcbab1]"
+          } w-28 rounded-lg p-1 text-center`}
+        >
           {value ? "Active" : "Inactive"}
         </p>
-
       </div>
     ),
   },
-]
+];
 
-
-
-export { 
-  topUserHeader, 
-  permissionHeadings, 
+export {
+  topUserHeader,
+  permissionHeadings,
   conditionHeadings,
   spaceTypeHeadings,
   AccessTypeHeadings,
   StorageTypeHeadings,
   UnloadMovesHeadings,
   ScheduleHeadings,
-  SecurityHeadings
+  SecurityHeadings,
 };

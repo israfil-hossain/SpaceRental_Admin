@@ -12,20 +12,32 @@ import PackageBreadcrumb from "../components/common/PackageBreadcrumb";
 
 import DefaultTable from "../components/common/DefaultTable";
 
-import userData from "../constants/Data/dashboardData";
-
 import StoreCard from "../components/common/StoreCard";
 import { earnings, months } from "../constants/Data/constantsData";
 import { topUserHeader } from "../constants/TableColumns/headings";
 import { getCurrentMonth } from "../utils/CommonFunction";
 import { CommonSelect } from "../components/common/ui";
+import { API } from "../api/endpoints";
+import { useQuery } from "@tanstack/react-query";
 
 const Dashboard = () => {
   const currentMonth = getCurrentMonth();
   const [earning, setEarnings] = useState("week");
   const [selectedOption, setSelectedOption] = useState(currentMonth);
   const [page, setPage] = useState(1);
-  const [size, setSize] = useState(10);
+  const [size, setSize] = useState(100);
+
+  const { data: allspace = {}, isLoading: spaceLoading } = useQuery([
+    `${API.GetSpaceForRent}?Page=${page}&PageSize=${size}&Name=${name}`,
+  ]);
+
+  const { data: allUsers = {}, isLoading: allUsersLoading } = useQuery([
+    `/api/ApplicationUser/GetAll?Page=${page}&PageSize=${size}`,
+  ]);
+
+  const recentUsers = allUsers?.data
+  ?.sort((a, b) => new Date(b.dateJoined) - new Date(a.dateJoined)) // Sort by most recent join date
+  .slice(0, 10); // Get only the top 10 most recent users
 
   return (
     <Fragment>
@@ -120,7 +132,7 @@ const Dashboard = () => {
               <DefaultTable
                 isLoading={false}
                 headings={topUserHeader}
-                data={userData?.topUser}
+                data={recentUsers}
                 disablePagination={true}
                 size={size}
                 setSize={setSize}
@@ -133,46 +145,16 @@ const Dashboard = () => {
 
         <div className="py-5 ">
           <h4 className="text-xl font-semibold font-sans mb-5">Top Stores </h4>
-          <div className="grid lg:grid-cols-3 xs:grid-cols-1  gap-6">
-            <StoreCard />
-            <StoreCard />
-            <StoreCard />
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 md:grid-cols-3 gap-6 p-4">
+            {allspace?.data
+              ?.filter((data) => data.averageRating > 3) // Filter data with rating greater than 3
+              .slice(0, 10) // Limit the result to the first 10 items
+              .map((data, id) => (
+                <StoreCard data={data} key={id} />
+              ))}
           </div>
         </div>
 
-        {/* <div className="xl:px-12  rounded-lg bg-white mb-10 border-2 xs:pb-5">
-          <div className=" overflow-hidden h-full w-full">
-            <div className="flex-col lg:flex-row flex xs:flex-col lg:justify-between xs:justify-center justify-center items-center md:px-16 h-full w-full">
-              <div className="lg:w-[450px] lg:h-full xs:w-[300px] w-full flex justify-center ml-28 sm:ml-12 xs:ml-12 h-[300px] lg:px-0 px-4 md:px-10  md:mb-10  py-5">
-                <img
-                  src={hero}
-                  alt="hero"
-                  className="w-full h-full rounded-lg pt-4"
-                />
-              </div>
-              <div className="lg:w-1/2 xs:w-full w-full flex justify-center items-center ">
-                <div className="w-full flex flex-col h-full items-center text-center ">
-                  <span className="pt-10 px-5 lg:text-[30px] xs:text-[25px] md:text-[35px] sm:text-[30px] text-center pb-2 md:pb-5 font-sans font-bold inline-block bg-gradient-to-r from-purple-400 to-emerald-700 text-transparent bg-clip-text">
-                    {control
-                      ? control[0]?.title
-                      : "Making Your MRCS Journey Easiest"}
-                  </span>
-                  <span className="text-center pt-4 px-5 lg:text-[25px] xs:text-[20px] text-[30px]   xs:pl-0 md:pl-8 items-center font-sans font-semibold inline-block bg-gradient-to-r from-emerald-500 to-[#4D317D] text-transparent bg-clip-text">
-                    {control
-                      ? control[0]?.subtitle
-                      : "If you never try, You will never win"}
-                  </span>
-                  <br />
-                  <Link to="/allquiz">
-                    <button className="py-3 rounded-full px-16  bg-gradient-to-r from-emerald-500 to-indigo-400 text-lg font-bold text-white ">
-                      Start
-                    </button>
-                  </Link>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div> */}
       </div>
     </Fragment>
   );

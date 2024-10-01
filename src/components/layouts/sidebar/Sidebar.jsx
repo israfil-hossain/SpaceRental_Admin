@@ -8,14 +8,19 @@ import { useQueryClient } from "@tanstack/react-query";
 import { AiOutlineAppstore, AiOutlineControl } from "react-icons/ai";
 import { BsPerson } from "react-icons/bs";
 import { FiLogOut } from "react-icons/fi";
-import { MdContactSupport, MdMenu, MdOutlinePayments, MdSecurity, MdStorage } from "react-icons/md";
+import {
+  MdContactSupport,
+  MdMenu,
+  MdOutlinePayments,
+  MdSecurity,
+  MdStorage,
+} from "react-icons/md";
 import { PiUsersThreeLight } from "react-icons/pi";
 import { RiStore2Line } from "react-icons/ri";
 import { logo, profile } from "../../../assets";
 import { useAuthUserContext } from "../../../context/AuthUserProvider";
 import { convertToTitleCase } from "../../../utils/CommonFunction";
 import { removeTokens } from "../../../utils/localStorageUtils";
-import Submenu from "./Submenu"; // Import Submenu component
 import CommonTooltip from "../../common/CommonTooltip";
 import { IoAccessibility, IoMoveSharp } from "react-icons/io5";
 
@@ -81,39 +86,6 @@ const Sidebar = () => {
     navigate("/login");
   };
 
-  const controlPanelData = {
-    name: "Control Panel",
-    link: "/control-panel",
-    icon: AiOutlineControl,
-    menus: [
-      {
-        name: "Security",
-        link: "/control-panel/security",
-        icon: MdSecurity,
-      },
-      {
-        name: "Access Method",
-        link: "/control-panel/access-method",
-        icon: IoAccessibility,
-      },
-      {
-        name: "Storage Condition",
-        link: "/control-panel/storage-condition",
-        icon: MdStorage,
-      },
-      {
-        name: "Unload Move",
-        link: "/control-panel/unload-move",
-        icon: IoMoveSharp,
-      },
-      {
-        name: "Schedule",
-        link: "/control-panel/schedule",
-        icon: FaCalendarAlt,
-      },
-    ],
-  };
-
   return (
     <>
       <div
@@ -140,7 +112,7 @@ const Sidebar = () => {
         </Link>
 
         <div className="flex flex-col bg-gray-800  justify-between h-[88%] overflow-y-auto">
-          <ul className="whitespace-pre px-2.5 text-[0.9rem] py-5 flex flex-col gap-1  font-medium overflow-x-hidden scrollbar-thin scrollbar-track-white scrollbar-thumb-slate-100 ">
+          <ul className="whitespace-pre px-2.5 text-[0.9rem] py-5 flex flex-col gap-1  font-medium overflow-x-hidden no-scrollbar ">
             <li>
               <CommonTooltip text={"Dashboard"}>
                 <NavLink to={"/"} className="link text-white  font-sans">
@@ -180,16 +152,71 @@ const Sidebar = () => {
               </NavLink>
             </li>
 
-            {/* Submenu for Control Panel */}
-            <Submenu data={controlPanelData} />
-
             <li>
-              <NavLink to={"/support"} className="link text-white font-sans">
-                <MdContactSupport
+              <NavLink
+                to={"/control-panel"}
+                className="link text-white  font-sans"
+              >
+                <AiOutlineControl
                   size={23}
                   className="min-w-max active:text-black  text-white "
                 />
-                Support
+                Control Panel
+              </NavLink>
+            </li>
+            <li>
+              <NavLink to={"/security"} className="link text-white  font-sans">
+                <MdSecurity
+                  size={23}
+                  className="min-w-max active:text-black  text-white "
+                />
+                Security
+              </NavLink>
+            </li>
+            <li>
+              <NavLink
+                to={"/access-method"}
+                className="link text-white  font-sans"
+              >
+                <IoAccessibility
+                  size={23}
+                  className="min-w-max active:text-black  text-white "
+                />
+                Access Method
+              </NavLink>
+            </li>
+            <li>
+              <NavLink
+                to={"/storage-condition"}
+                className="link text-white  font-sans"
+              >
+                <MdStorage
+                  size={23}
+                  className="min-w-max active:text-black  text-white "
+                />
+                Storage
+              </NavLink>
+            </li>
+
+            <li>
+              <NavLink
+                to={"/unload-move"}
+                className="link text-white font-sans"
+              >
+                <IoMoveSharp
+                  size={23}
+                  className="min-w-max active:text-black  text-white "
+                />
+                Unload Move
+              </NavLink>
+            </li>
+            <li>
+              <NavLink to={"/schedule"} className="link text-white font-sans">
+                <FaCalendarAlt
+                  size={23}
+                  className="min-w-max active:text-black  text-white "
+                />
+                Schedule
               </NavLink>
             </li>
             <li>

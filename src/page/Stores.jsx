@@ -24,7 +24,7 @@ const Stores = () => {
 
   const currentMonth = getCurrentMonth();
   const [selectedOption, setSelectedOption] = useState(currentMonth);
-  
+
   const { data: allspace = {}, isLoading: spaceLoading } = useQuery([
     `${API.GetSpaceForRent}?Page=${page}&PageSize=${size}&Name=${name}`,
   ]);
@@ -35,24 +35,25 @@ const Stores = () => {
 
   return (
     <Fragment>
-      {
-        spaceLoading ? <CommonProgress />  : 
-      <div>
-        <PackageBreadcrumb>
-          <Breadcrumbs aria-label="breadcrumb">
-            <Link underline="hover" color="grey" href="/category">
-              <Box sx={{ justifyContent: "center", display: "flex" }}>
-                <RiStore2Line size={23} className="min-w-max text-primary" />
-                <span className="text-primary ">&nbsp;Stores </span>
-              </Box>
-            </Link>
-          </Breadcrumbs>
-        </PackageBreadcrumb>
-        <div className="flex justify-between ">
-          <div className="p-1 text-lg font-semibold font-sanse">
-          <CustomSearchField name={name} onChange={setName} />
-          </div>
-          {/* <div className="p-1">
+      {spaceLoading ? (
+        <CommonProgress />
+      ) : (
+        <div>
+          <PackageBreadcrumb>
+            <Breadcrumbs aria-label="breadcrumb">
+              <Link underline="hover" color="grey" href="/category">
+                <Box sx={{ justifyContent: "center", display: "flex" }}>
+                  <RiStore2Line size={23} className="min-w-max text-primary" />
+                  <span className="text-primary ">&nbsp;Stores </span>
+                </Box>
+              </Link>
+            </Breadcrumbs>
+          </PackageBreadcrumb>
+          <div className="flex justify-between ">
+            <div className="p-1 text-lg font-semibold font-sanse">
+              <CustomSearchField name={name} onChange={setName} />
+            </div>
+            {/* <div className="p-1">
             <CommonSelect
               labelId={"months-select"}
               id={"months-select-id"}
@@ -61,26 +62,24 @@ const Stores = () => {
               setSelect={setSelectedOption}
             />
           </div> */}
-        </div>
+          </div>
 
-        <div className="grid lg:grid-cols-3  gap-5 md:grid-cols-2  grid-cols-1 mt-5">
-          {
-            allspace?.data?.map((data,id)=>(
-              <StoreCard data={data} key={id}/>
-            ))
-          }
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 md:grid-cols-3 gap-6 p-4">
+            {allspace?.data?.map((data, id) => (
+              <StoreCard data={data} key={id} />
+            ))}
+          </div>
+          <div className="flex justify-center mt-5">
+            <Pagination
+              count={allspace?.totalPages} // Total number of pages
+              page={page} // Current page
+              onChange={handlePageChange} // Handle page change
+              color="primary"
+              shape="rounded"
+            />
+          </div>
         </div>
-        <div className="flex justify-center mt-5">
-          <Pagination
-            count={allspace?.totalPages} // Total number of pages
-            page={page} // Current page
-            onChange={handlePageChange} // Handle page change
-            color="primary"
-            shape="rounded"
-          />
-        </div>
-      </div>
-    }
+      )}
     </Fragment>
   );
 };

@@ -17,7 +17,12 @@ import { CommonSelect } from "../components/common/ui";
 import { months } from "../constants/Data/constantsData";
 import { userHeading } from "../constants/TableColumns/userHeadings";
 import { getCurrentMonth } from "../utils/CommonFunction";
-
+import { MdDelete } from "react-icons/md";
+import { API } from "../api/endpoints";
+import useDelete from "../hooks/useDelete";
+import { toast } from "react-toastify";
+import { deleteConfirmation } from "../components/common/Toast/DeleteConfirmation";
+import dayjs from "dayjs";
 const Users = () => {
   const [page, setPage] = useState(1);
   const [size, setSize] = useState(10);
@@ -31,9 +36,46 @@ const Users = () => {
 
   const [selectedOption, setSelectedOption] = useState(currentMonth);
 
+   // Filter users by selected month (dateJoined)
+   const filteredUsers = allUsers?.data?.filter((user) => {
+    const userJoinMonth = dayjs(user.dateJoined).format('MM'); // Extract the month as 'MM'
+    return userJoinMonth === selectedOption; // Compare with selected option (month)
+  });
+  
   const handleChange = (event, newValue) => {
     setRoleTab(newValue);
   };
+
+   // Delte Mutation ....
+   const deleteMutation = useDelete({
+    endpoint: API.DeleteUser,
+  });
+ 
+  const handleDelete = (item) => {
+    if (item?._id) {
+      deleteConfirmation().then((result) => {
+        if (result.isConfirmed) {
+          deleteMutation.mutateAsync(item?._id, {
+            onSuccess: () => {
+              toast.success("Delete successful!");
+              refetch();
+            },
+            
+          });
+        }
+      });
+    }
+  };
+
+  const conditionActions = [
+    {
+      icon: <MdDelete color="white" size={16} />,
+      tooltip: "Delete",
+      handler: handleDelete,
+      bgColor: "bg-red-500",
+      hoverColor: "hover:bg-red-700",
+    },
+  ];
 
   return (
     <Fragment>
@@ -42,7 +84,7 @@ const Users = () => {
           <Breadcrumbs aria-label="breadcrumb">
             <Link underline="hover" color="grey" href="/">
               <Box sx={{ justifyContent: "center", display: "flex" }}>
-                <FaUserAlt size={23} className="min-w-max text-emerald-500" />
+                <FaUserAlt size={23} className="min-w-max text-primary" />
                 &nbsp; Users
               </Box>
             </Link>
@@ -87,6 +129,7 @@ const Users = () => {
                   setSize={setSize}
                   page={page}
                   setPage={setPage}
+                  actionIcons={conditionActions}
                 />
               </Box>
             </Box>

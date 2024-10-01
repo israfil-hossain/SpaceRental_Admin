@@ -29,9 +29,7 @@
 .sublink {
   @apply text-white ;
 }
-.sublink.active {
-  @apply  text-yellow-400 border-l-4 border-yellow-400 bg-transparent;
-}
+
 
 
 .link {
@@ -75,4 +73,14 @@
   border-right: 5px solid transparent;
   border-top: 5px solid #9568ff;
   /* Change 'border-bottom' to 'border-top' */
+}
+
+
+.no-scrollbar::-webkit-scrollbar {
+  display: none; /* For Chrome, Safari, and Opera */
+}
+
+.no-scrollbar {
+  -ms-overflow-style: none;  /* For Internet Explorer and Edge */
+  scrollbar-width: none;  /* For Firefox */
 }

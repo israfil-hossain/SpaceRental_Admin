@@ -1,4 +1,5 @@
 import { CiMail, CiPhone } from "react-icons/ci";
+import { MdDelete } from "react-icons/md";
 import { calender, profile } from "../../assets/images/icons";
 import {
   convertToTitleCase,
